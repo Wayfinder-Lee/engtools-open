@@ -1,0 +1,332 @@
+/* 扫码拍照上传面板（QrUploadPanel）。qr- 前缀；颜色一律取 index.css 变量。 */
+
+.qr-wrap {
+  border: 1px solid var(--fg-faint);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  margin-bottom: 12px;
+  background: var(--bg-raised);
+}
+
+/* 收起态一行入口 */
+.qr-entry {
+  appearance: none;
+  border: none;
+  background: var(--bg-inset);
+  color: var(--fg-2);
+  font-family: inherit;
+  font-size: 13px;
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.qr-entry:hover {
+  background: var(--accent-soft);
+}
+
+.qr-loading {
+  font-size: 13px;
+  color: var(--fg-muted);
+  padding: 8px 0;
+}
+.qr-notice {
+  font-size: 13px;
+  color: var(--success);
+  margin-top: 8px;
+}
+.qr-error {
+  font-size: 13px;
+  color: var(--danger);
+  margin-top: 8px;
+}
+
+/* 恢复时任务已结束 */
+.qr-gone {
+  font-size: 13px;
+  color: var(--fg-2);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* active 布局：左码右图 */
+.qr-body {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 16px;
+}
+@media (max-width: 800px) {
+  .qr-body { grid-template-columns: 1fr; }
+}
+
+.qr-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+.qr-img-box {
+  position: relative;
+  width: 264px;
+  height: 264px;
+  border-radius: var(--radius-md);
+  background: #fff;
+  padding: 8px;
+  box-sizing: border-box;
+  box-shadow: var(--shadow-sm);
+}
+.qr-img-box img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.qr-img-box.qr-expired img {
+  filter: grayscale(1);
+  opacity: 0.35;
+}
+.qr-expired-mask {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: var(--danger);
+  font-weight: 600;
+}
+.qr-count {
+  font-size: 12px;
+  color: var(--fg-muted);
+}
+.qr-count b {
+  color: var(--fg);
+  font-variant-numeric: tabular-nums;
+}
+.qr-left-btns {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.qr-hint {
+  font-size: 12px;
+  color: var(--fg-faint);
+  line-height: 1.6;
+}
+
+/* 右侧：照片网格 */
+.qr-right {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.qr-right-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.qr-count-label {
+  font-size: 14px;
+  color: var(--fg);
+}
+.qr-dim {
+  font-size: 12px;
+  color: var(--fg-muted);
+}
+.qr-spacer {
+  flex: 1;
+}
+
+.qr-empty {
+  border: 1px dashed var(--fg-faint);
+  border-radius: var(--radius-md);
+  padding: 28px 12px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--fg-muted);
+  line-height: 1.8;
+}
+.qr-empty span {
+  font-size: 12px;
+  color: var(--fg-faint);
+}
+
+.qr-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 8px;
+  max-height: 360px;
+  overflow-y: auto;
+}
+.qr-thumb {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  border-radius: var(--radius-sm);
+  background: var(--bg-inset);
+  overflow: hidden;
+  border: 2px solid transparent;
+}
+.qr-thumb.sel {
+  border-color: var(--accent);
+}
+.qr-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.qr-thumb-loading {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fg-faint);
+  font-size: 16px;
+}
+.qr-seq {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  font-size: 11px;
+  line-height: 1;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: var(--radius-pill);
+  padding: 3px 6px;
+}
+.qr-imported {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  font-size: 11px;
+  line-height: 1;
+  color: #fff;
+  background: var(--success);
+  border-radius: var(--radius-pill);
+  padding: 3px 6px;
+}
+.qr-quality {
+  position: absolute;
+  bottom: 26px;
+  left: 4px;
+  font-size: 10px;
+  line-height: 1;
+  color: #fff;
+  background: var(--warning);
+  border-radius: var(--radius-sm);
+  padding: 3px 5px;
+}
+.qr-thumb-ops {
+  position: absolute;
+  inset: auto 0 0 0;
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+  padding: 3px;
+  background: rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+.qr-thumb:hover .qr-thumb-ops {
+  opacity: 1;
+}
+.qr-op {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: var(--radius-sm);
+}
+.qr-op:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+.qr-thumb-meta {
+  position: absolute;
+  bottom: 3px;
+  left: 4px;
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+/* 大图浮层 */
+.qr-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 24px;
+}
+.qr-overlay-body {
+  background: var(--bg-raised);
+  border-radius: var(--radius-lg);
+  padding: 12px;
+  max-width: min(820px, 92vw);
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: var(--shadow-lg);
+}
+.qr-overlay-body img {
+  max-width: 100%;
+  max-height: 74vh;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+}
+.qr-overlay-meta {
+  font-size: 12px;
+  color: var(--fg-muted);
+  text-align: center;
+}
+
+/* 按钮语言与全站一致 */
+.qr-btn {
+  appearance: none;
+  border: 1px solid var(--fg-faint);
+  background: var(--bg-overlay);
+  color: var(--fg);
+  font-family: inherit;
+  font-size: 13px;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.qr-btn:hover {
+  background: var(--bg-inset);
+}
+.qr-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.qr-btn-sm {
+  font-size: 12px;
+  padding: 5px 10px;
+}
+.qr-btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.qr-btn-primary:hover {
+  background: var(--accent-hover);
+}
+.qr-btn-primary:disabled {
+  background: var(--fg-faint);
+  border-color: var(--fg-faint);
+}

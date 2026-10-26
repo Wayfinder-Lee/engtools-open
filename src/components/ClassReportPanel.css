@@ -1,0 +1,312 @@
+/* ─── 班级讲评报告（cr- 前缀）────────────────────────
+   颜色全部来自 index.css tokens，深色模式自动跟随。 */
+
+.cr-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* 一、客观统计 */
+
+.cr-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cr-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.cr-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 12px 8px;
+  background: var(--bg-inset);
+  border-radius: var(--radius-md);
+}
+
+.cr-tile-num {
+  font-family: var(--font-serif);
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--fg);
+  line-height: 1.1;
+}
+
+.cr-tile-label {
+  font-size: 0.8rem;
+  color: var(--fg-muted);
+}
+
+.cr-excluded {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--warning);
+}
+
+.cr-band-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cr-band-chip {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 5px 12px;
+  background: var(--bg-inset);
+  border-radius: var(--radius-pill);
+}
+
+.cr-band-chip b {
+  font-size: 1rem;
+  color: var(--fg);
+}
+
+.cr-band-chip span {
+  font-size: 0.8rem;
+  color: var(--fg-muted);
+}
+
+.cr-freq {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cr-freq-row {
+  display: grid;
+  grid-template-columns: 3em 1fr 2.5em;
+  align-items: center;
+  gap: 10px;
+}
+
+.cr-freq-label {
+  font-size: 0.85rem;
+  color: var(--fg-2);
+}
+
+.cr-freq-bar-track {
+  display: block;
+  height: 10px;
+  background: var(--bg-inset);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.cr-freq-bar {
+  display: block;
+  height: 100%;
+  min-width: 2px;
+  background: var(--accent);
+  border-radius: var(--radius-pill);
+}
+
+.cr-freq-count {
+  font-size: 0.85rem;
+  color: var(--fg-2);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.cr-muted {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--fg-muted);
+}
+
+/* 生成入口 */
+
+.cr-gen-row {
+  flex-wrap: wrap;
+}
+
+/* 二～五、报告正文 */
+
+.cr-report {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-top: 1px solid var(--border-faint);
+  padding-top: 14px;
+}
+
+.cr-report-head {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.cr-generated {
+  font-size: 0.85rem;
+  color: var(--fg-muted);
+}
+
+.cr-stale {
+  font-size: 0.85rem;
+  color: var(--warning);
+  background: var(--warning-soft);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+}
+
+.cr-sec {
+  margin: 10px 0 14px;
+}
+
+.cr-sec-title {
+  margin: 0 0 10px;
+  padding-left: 10px;
+  border-left: 3px solid var(--accent);
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  color: var(--fg);
+}
+
+/* 共性问题卡 */
+
+.cr-problem {
+  background: var(--bg-raised);
+  border: 1px solid var(--border-faint);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  box-shadow: var(--shadow-sm);
+}
+
+.cr-problem-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.cr-problem-head h5 {
+  margin: 0;
+  font-size: 0.98rem;
+  color: var(--fg);
+}
+
+.cr-sev {
+  flex: none;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 1px 8px;
+  border-radius: var(--radius-pill);
+}
+
+.cr-sev-high {
+  color: var(--danger);
+  background: var(--danger-soft);
+  border: 1px solid var(--danger-border);
+}
+
+.cr-sev-medium {
+  color: var(--warning);
+  background: var(--warning-soft);
+  border: 1px solid var(--warning-border);
+}
+
+.cr-sev-low {
+  color: var(--success);
+  background: var(--success-soft);
+  border: 1px solid var(--success-border);
+}
+
+.cr-problem-desc {
+  margin: 0 0 8px;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--fg-2);
+}
+
+.cr-example {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 8px 10px;
+  background: var(--bg-inset);
+  border-radius: var(--radius-sm);
+  margin-bottom: 6px;
+}
+
+.cr-ex-row {
+  display: flex;
+  gap: 8px;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.cr-ex-label {
+  flex: none;
+  font-size: 0.78rem;
+  color: var(--fg-muted);
+  padding-top: 2px;
+}
+
+.cr-ex-quote {
+  color: var(--danger);
+}
+
+.cr-ex-corr {
+  color: var(--success);
+}
+
+.cr-ex-note {
+  color: var(--fg-2);
+}
+
+/* 建设性意见 / 评讲课建议 列表 */
+
+.cr-list {
+  margin: 0;
+  padding-left: 1.4em;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cr-list li {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--fg-2);
+}
+
+/* 亮点展示 */
+
+.cr-highlight {
+  padding: 10px 14px;
+  border-left: 3px solid var(--success-border);
+  background: var(--success-soft);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin-bottom: 8px;
+}
+
+.cr-hl-quote {
+  margin: 0 0 4px;
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--fg);
+}
+
+.cr-hl-attr {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--fg-2);
+}
+
+/* 复制/导出动作行 */
+
+.cr-actions {
+  margin-top: 6px;
+}

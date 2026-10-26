@@ -1,0 +1,21 @@
+{
+  "name": "engtools-api",
+  "version": "1.0.0",
+  "description": "English Teacher Toolkit 后端：邮箱登录 + 额度计费 + LLM 转发（Node.js Web 服务）",
+  "private": true,
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "init-tables": "node scripts/init-tables.js",
+    "gen-codes": "node scripts/gen-codes.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^9.0.3",
+    "tablestore": "^5.5.0"
+  }
+}

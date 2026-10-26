@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>英语试卷词汇提取工具 - 一键生成词汇学案与默写清单</title>
+<meta name="description" content="把整份高考/中考英语试卷粘贴进来，AI 自动按题型分段、提取重点词汇，生成带音标、释义、高频搭配、记忆法的词汇学案，一键导出 Word / CSV 打印。" />
+<link rel="canonical" href="https://www.engtools.cn/landing/tools/vocab.html" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="英语试卷词汇提取工具 - 一键生成词汇学案与默写清单" />
+<meta property="og:description" content="把整份高考/中考英语试卷粘贴进来，AI 自动按题型分段、提取重点词汇，生成带音标、释义、高频搭配、记忆法的词汇学案，一键导出 Word / CSV 打印。" />
+<meta property="og:url" content="https://www.engtools.cn/landing/tools/vocab.html" />
+<style>:root{--bg:#faf6f1;--bg-raised:#fffdf9;--fg:#2e241c;--fg2:#5c5347;--muted:#8a7f70;--accent:#d97757;--accent-t:#a64a28;--soft:#f6e7de;--border:#e8e0d4;--radius:14px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--fg);line-height:1.75}
+a{color:var(--accent-t)}
+.wrap{max-width:920px;margin:0 auto;padding:0 20px}
+header{border-bottom:1px solid var(--border);background:var(--bg-raised)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;padding:14px 20px}
+.logo{font-weight:700;font-size:16px;color:var(--fg);text-decoration:none}
+.hero{padding:56px 0 40px}
+.kicker{color:var(--accent-t);font-weight:600;font-size:14px;letter-spacing:.04em}
+h1{font-size:clamp(24px,5vw,36px);line-height:1.3;margin:8px 0 12px}
+.tagline{color:var(--fg2);font-size:16px;max-width:640px}
+.cta{display:inline-block;margin-top:22px;background:var(--accent);color:#fff;text-decoration:none;font-weight:600;padding:11px 28px;border-radius:999px}
+.cta:hover{background:#c4643f}
+h2{font-size:20px;margin:44px 0 14px}
+.shot{background:var(--bg-raised);border:1px dashed var(--border);border-radius:var(--radius);padding:14px}
+.shot img{width:100%;border-radius:10px;display:block}
+.shot-ph{min-height:300px;display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center;text-align:center;color:var(--muted);font-size:14px;padding:24px}
+.shot-ph b{color:var(--fg2)}
+.shot-cap{font-size:13px;color:var(--muted);margin-top:8px}
+ol.steps,ul.feats{padding-left:22px;color:var(--fg2)}
+ol.steps li,ul.feats li{margin:8px 0}
+details{background:var(--bg-raised);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin:10px 0}
+summary{cursor:pointer;font-weight:600}
+details p{color:var(--fg2);margin-top:8px;font-size:14.5px}
+.tools{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.tools a{font-size:13px;text-decoration:none;background:var(--bg-raised);border:1px solid var(--border);border-radius:999px;padding:6px 14px;color:var(--fg2)}
+.tools a:hover{border-color:var(--accent);color:var(--accent-t)}
+footer{border-top:1px solid var(--border);margin-top:56px;padding:22px 0 30px;color:var(--muted);font-size:13px;text-align:center}
+.note{font-size:13px;color:var(--muted);margin-top:8px}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"支持初中学段（中考）吗？","acceptedAnswer":{"@type":"Answer","text":"支持。初中模式词汇范围锚定义务教育课标三级词汇（约1600词）。"}},{"@type":"Question","name":"生成的词汇可以直接默写吗？","acceptedAnswer":{"@type":"Answer","text":"可导出默写清单或词汇默写卷（含报词单），直接打印。"}},{"@type":"Question","name":"要收费吗？","acceptedAnswer":{"@type":"Answer","text":"注册送体验额度，每段 5 额度，失败自动退回。"}}]}
+</script>
+</head>
+<body>
+<header><div class="wrap">
+  <a class="logo" href="/">🛠️ English Teacher's Toolkit</a>
+  <a href="/">返回主站 →</a>
+</div></header>
+
+<main class="wrap">
+  <section class="hero">
+    <span class="kicker">词汇提取 · 词汇学案</span>
+    <h1>英语试卷词汇提取工具</h1>
+    <p class="tagline">把整份高考/中考英语试卷粘贴进来，AI 自动按题型分段、提取重点词汇，生成带音标、释义、高频搭配、记忆法的词汇学案，一键导出 Word / CSV 打印。</p>
+    <a class="cta" href="/">免费试用（无需绑定 API Key）→</a>
+    <p class="note">注册即送体验额度；生成的内容可导出 Word / PDF 打印。</p>
+  </section>
+
+  <h2>成品长这样</h2>
+  <!-- ══ 图片占位（William 替换）══
+       建议图：词汇提取的词汇表界面截图：左侧行题分组（阅读理解A/完形填空…），每行一个词条（单词加粗、音标、★频次、释义、搭配、记忆法），右上角「导出 Docx 学案」按钮可见。
+       操作：截图后存为 ./images/vocab.jpg（1200×800 左右），
+       然后把下面整个 <div class="shot-ph">…</div> 换成：
+       <img src="./images/vocab.jpg" alt="词汇提取工具的词汇表成品界面" /> -->
+  <div class="shot">
+    <div class="shot-ph">
+      <span style="font-size:34px">📷</span>
+      <b>【图片占位】词汇提取工具的词汇表成品界面</b>
+      <span>词汇提取的词汇表界面截图：左侧行题分组（阅读理解A/完形填空…），每行一个词条（单词加粗、音标、★频次、释义、搭配、记忆法），右上角「导出 Docx 学案」按钮可见。</span>
+    </div>
+  </div>
+
+  <h2>三步出成品</h2>
+  <ol class="steps">
+<li>粘贴试卷原文（或打开词汇提取页后点「用示例试一试」先看效果）</li>
+<li>AI 自动按题型分段，勾选要提取词汇的段落并设置选词量</li>
+<li>核对/编辑词条，选择词汇表、默写清单等板块，导出 Word / CSV</li>
+  </ol>
+
+  <h2>为什么老师用它</h2>
+  <ul class="feats">
+<li>自动识别听力、阅读、完形、语法填空等题型段落，按段生成</li>
+<li>每个词条含音标、双语释义、高频搭配、构词记忆法、考频星级</li>
+<li>全部字段可在线编辑，导出前可勾选删减</li>
+<li>支持教师卷/学生卷、紧凑模式，页数预估省纸</li>
+  </ul>
+
+  <h2>常见问题</h2>
+<details><summary>支持初中学段（中考）吗？</summary><p>支持。切换到初中模式后，词汇范围锚定《义务教育英语课程标准（2022年版）》三级词汇（约1600词），提示词按中考标准生成。</p></details>
+<details><summary>生成的词汇可以直接默写吗？</summary><p>可以。导出面板可选「默写清单」或「配套材料 → 词汇默写卷（含报词单）」，中文提示+空格作答，直接打印。</p></details>
+<details><summary>要收费吗？</summary><p>注册即送体验额度，每段提取消耗 5 额度，生成失败自动退回；也可绑定自己的 API Key 使用。</p></details>
+
+  <h2>其他工具</h2>
+  <div class="tools">
+    <a href="./practical">✉️ 应用文助手</a><a href="./continuation">📖 读后续写助手</a><a href="./worksheet">✍️ 个性化学案</a><a href="./copybook">✒️ 衡水体字帖</a><a href="./exampaper">📄 试卷排版助手</a>
+  </div>
+</main>
+
+<footer><div class="wrap">
+  <p>English Teacher's Toolkit · 面向中学英语教师的 AI 备课工具箱 · <a href="https://www.engtools.cn">www.engtools.cn</a></p>
+  <!-- ICP 备案号下来后填这里 -->
+</div></footer>
+</body>
+</html>

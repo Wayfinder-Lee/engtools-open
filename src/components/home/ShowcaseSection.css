@@ -1,0 +1,89 @@
+/* ─── Showcase section: alternating copy + mock panel ─── */
+.showcase-band { background: var(--bg-raised); }
+.showcase-band.grey { background: var(--bg); }
+
+.showcase-section {
+  display: grid; grid-template-columns: 5fr 7fr; gap: 56px; align-items: center;
+  max-width: 1100px; margin: 0 auto; padding: 64px 24px;
+}
+.showcase-section.reverse .showcase-copy { order: 2; }
+.showcase-section.reverse .showcase-panel { order: 1; }
+
+/* Copy column */
+.showcase-kicker {
+  display: inline-block; font-size: 14px; font-weight: 700; color: var(--accent-text);
+  background: var(--accent-soft); padding: 4px 12px; border-radius: var(--radius-pill); margin-bottom: 14px;
+}
+.showcase-copy h3 { font-size: 26px; line-height: 1.35; color: var(--fg); margin: 0 0 14px; }
+.showcase-copy p { font-size: 15px; line-height: 1.75; color: var(--fg-muted); margin: 0; }
+.showcase-bullets { list-style: none; padding: 0; margin: 16px 0 0; }
+.showcase-bullets li {
+  font-size: 14px; color: var(--fg-2); line-height: 1.7; padding-left: 20px; position: relative;
+}
+.showcase-bullets li::before { content: '✓'; position: absolute; left: 0; color: var(--success); font-weight: 700; }
+
+/* Panel window chrome */
+.panel-frame {
+  background: var(--bg-overlay); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg); overflow: hidden;
+}
+.panel-frame-bar {
+  display: flex; align-items: center; gap: 6px; background: var(--bg-inset);
+  padding: 9px 12px; border-bottom: 1px solid var(--border-faint);
+}
+.frame-dot { width: 10px; height: 10px; border-radius: 50%; }
+.frame-dot.red { background: #ff5f57; }
+.frame-dot.yellow { background: #febc2e; }
+.frame-dot.green { background: #28c840; }
+.frame-title { flex: 1; text-align: center; font-size: 12px; color: var(--fg-faint); margin-right: 42px; }
+.panel-frame-body { padding: 16px; }
+
+/* Scroll reveal */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.revealed { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* ─── Shared mock building blocks ─── */
+.mock-chip {
+  display: inline-block; font-size: 12px; font-weight: 600; color: var(--accent-text);
+  background: var(--accent-soft); padding: 3px 10px; border-radius: var(--radius-pill); margin: 3px 6px 3px 0;
+}
+.mock-pills { display: flex; gap: 0; border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; width: fit-content; margin-bottom: 12px; }
+.mock-pill {
+  padding: 6px 14px; font-size: 13px; font-weight: 600; color: var(--accent-text);
+  background: var(--bg-overlay); border: none; border-right: 1px solid var(--border); cursor: pointer; transition: all 0.15s;
+}
+.mock-pill:last-child { border-right: none; }
+.mock-pill:hover:not(.active) { background: var(--accent-soft); }
+.mock-pill.active { background: var(--accent); color: #fff; }
+
+.mock-fake-btn {
+  font-size: 12px; font-weight: 600; color: var(--accent-text); background: var(--accent-soft);
+  border: 1px solid var(--accent-soft-border); border-radius: var(--radius-sm); padding: 5px 12px; cursor: pointer; transition: background 0.15s;
+}
+.mock-fake-btn:hover { background: var(--accent-soft-border); }
+
+.mock-status-chip { font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 4px; white-space: nowrap; }
+.mock-status-chip.done { color: var(--success); background: var(--success-soft); }
+.mock-status-chip.busy { color: var(--accent-text); background: var(--accent-soft); animation: mockPulse 1.4s ease-in-out infinite; }
+.mock-status-chip.pending { color: var(--fg-muted); background: var(--bg-inset); }
+@keyframes mockPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
+
+@keyframes mockFadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.mock-fade { animation: mockFadeIn 0.3s ease; }
+
+.mock-img-placeholder {
+  display: flex; align-items: center; justify-content: center;
+  border: 2px dashed var(--border); border-radius: var(--radius-sm); color: var(--fg-faint); font-size: 12px;
+  background: var(--bg-inset);
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .showcase-section { grid-template-columns: 1fr; gap: 24px; padding: 40px 16px; }
+  .showcase-section.reverse .showcase-copy { order: 0; }
+  .showcase-section.reverse .showcase-panel { order: 1; }
+  .showcase-copy h3 { font-size: 21px; }
+}

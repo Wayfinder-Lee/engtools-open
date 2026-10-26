@@ -1,0 +1,89 @@
+/* ===== 顶栏账号区（米白头部内，浅色文字层级） ===== */
+.account-cluster {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.quota-chip {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.quota-label { font-size: 12px; color: var(--fg-muted); white-space: nowrap; }
+.quota-value { font-size: 18px; font-weight: 800; color: var(--fg); line-height: 1; }
+/* 低额度提醒（W4）：低于阈值时余额数字变色 */
+.quota-chip.low .quota-value { color: var(--danger); }
+.quota-chip.low .quota-label { color: var(--danger); opacity: 0.75; }
+.quota-refresh {
+  font-size: 14px; color: var(--fg-faint); background: none; border: none; cursor: pointer;
+  align-self: center; line-height: 1; padding: 2px;
+}
+.quota-refresh:hover { color: var(--fg); }
+
+/* 额度充值按钮 + 下拉面板 */
+.recharge-wrap { position: relative; }
+.recharge-btn {
+  padding: 6px 16px; font-size: 13px; font-weight: 600; color: #fff;
+  background: var(--accent); border: none; border-radius: var(--radius-pill); cursor: pointer;
+  transition: background 0.15s;
+}
+.recharge-btn:hover { background: var(--accent-hover); }
+
+/* 宽度按「完整兑换码 23 字符（含横线）+ 兑换按钮」刚好放下取值——窄了码显示不全 */
+.recharge-pop {
+  position: absolute; top: calc(100% + 10px); right: 0;
+  width: 360px; max-width: calc(100vw - 32px); padding: 14px;
+  background: var(--bg-overlay); border: 1px solid var(--border); border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  z-index: 200;
+  display: flex; flex-direction: column; gap: 10px;
+}
+
+.redeem-row { display: flex; gap: 8px; }
+.redeem-input {
+  flex: 1; min-width: 0; padding: 7px 12px; font-size: 14px; letter-spacing: 1px;
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm); text-transform: uppercase;
+  background: var(--bg-raised); color: var(--fg);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.redeem-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(217, 119, 87, 0.15); }
+.redeem-input:disabled { background: var(--bg-inset); color: var(--fg-faint); }
+.redeem-btn {
+  padding: 7px 18px; font-size: 14px; font-weight: 600; color: #fff;
+  background: var(--accent); border: none; border-radius: var(--radius-sm); cursor: pointer;
+  transition: background 0.15s;
+}
+.redeem-btn:hover:not(:disabled) { background: var(--accent-hover); }
+.redeem-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* 淘宝购买区：扫码 + 链接。二维码必须恒白底才好扫（同 Print red lines，不随深色主题） */
+.buy-box {
+  display: flex; gap: 10px; align-items: center;
+  padding: 10px; background: var(--bg-raised);
+  border: 1px solid var(--border-faint); border-radius: var(--radius-sm);
+}
+/* 二维码 + 「请用淘宝扫码」提示（防误用微信扫——淘宝口令微信打不开） */
+.buy-qr-wrap {
+  flex: none; display: flex; flex-direction: column; align-items: center; gap: 4px;
+}
+.buy-qr {
+  flex: none; width: 92px; height: 92px; padding: 3px;
+  background: #fff; border: 1px solid var(--border); border-radius: var(--radius-sm);
+}
+.buy-qr-tip { font-size: 11px; color: var(--fg-muted); white-space: nowrap; }
+.buy-info { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.buy-title { font-size: 13px; font-weight: 600; color: var(--fg); }
+.buy-note { font-size: 12px; line-height: 1.5; color: var(--fg-muted); }
+
+.buy-link {
+  font-size: 13px; font-weight: 600; color: var(--accent-text); text-decoration: none;
+}
+.buy-link:hover { text-decoration: underline; }
+
+/* 购买入口关闭时的说明（W4：不给新用户留死路） */
+.buy-closed { font-size: 12px; line-height: 1.5; color: var(--fg-muted); }
+
+.redeem-msg { font-size: 13px; }
+.redeem-msg.ok { color: var(--success); }
+.redeem-msg.err { color: var(--danger); }

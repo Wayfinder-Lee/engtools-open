@@ -1,0 +1,37 @@
+.print-marquee { padding: 64px 0 72px; background: var(--bg-raised); overflow: hidden; }
+.print-marquee-title { text-align: center; font-size: 28px; color: var(--fg); margin: 0 0 8px; padding: 0 24px; }
+.print-marquee-sub { text-align: center; font-size: 14px; color: var(--fg-muted); margin: 0 0 32px; padding: 0 24px; }
+
+.marquee-viewport {
+  overflow: hidden; position: relative;
+  /* soft fade at both edges */
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.marquee-track {
+  display: flex; width: max-content;
+  animation: marqueeScroll 55s linear infinite;
+}
+.marquee-viewport:hover .marquee-track { animation-play-state: paused; }
+.marquee-track img {
+  height: 340px; width: auto; border: 1px solid var(--border); border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md); background: #fff;
+  -webkit-user-select: none; user-select: none;
+  /* trailing margin instead of gap → -50% shift lands exactly on copy 2 (seamless) */
+  margin-right: 20px;
+}
+
+/* track holds two copies of the list → shifting by exactly half loops seamlessly */
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+}
+
+@media (max-width: 768px) {
+  .print-marquee { padding: 40px 0 48px; }
+  .print-marquee-title { font-size: 22px; }
+  .marquee-track img { height: 240px; }
+}

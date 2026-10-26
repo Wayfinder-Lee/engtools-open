@@ -1,0 +1,126 @@
+/* 信息弹层（隐私/协议/更新日志/反馈）—— 暖米白主题 token */
+
+.info-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 25, 20, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.info-modal {
+  background: var(--bg-raised);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  display: grid;
+  grid-template-columns: 168px 1fr;
+  /* 行高必须 minmax(0,1fr)：容器只有 max-height 时 grid 行仍按内容撑开，
+     滚动区永远不会产生内部滚动（内容被 overflow:hidden 直接裁掉） */
+  grid-template-rows: minmax(0, 1fr);
+  width: min(720px, 100%);
+  height: min(560px, calc(100vh - 40px));
+  overflow: hidden;
+}
+
+.info-side {
+  border-right: 1px solid var(--border-faint);
+  padding: 14px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--bg-inset);
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.info-nav-item {
+  position: relative;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: 13px;
+  color: var(--fg-2);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+.info-nav-item:hover { background: var(--bg-overlay); color: var(--fg); }
+.info-nav-item.active {
+  background: var(--bg-overlay);
+  color: var(--fg);
+  font-weight: 600;
+  box-shadow: inset 0 0 0 1px var(--border-faint);
+}
+
+.info-dot {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.info-body {
+  padding: 18px 22px;
+  overflow-y: auto;
+  min-width: 0;
+  min-height: 0;
+}
+
+.info-body-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.info-body-head h3 { margin: 0; font-size: 16px; }
+
+.info-close {
+  border: none;
+  background: transparent;
+  color: var(--fg-muted);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+}
+.info-close:hover { background: var(--bg-inset); color: var(--fg); }
+
+.info-prose { font-size: 13.5px; line-height: 1.75; color: var(--fg-2); }
+.info-prose h4 { margin: 14px 0 4px; font-size: 13.5px; color: var(--fg); }
+.info-prose p { margin: 4px 0; }
+.info-prose ul, .info-prose ol { margin: 4px 0; padding-left: 20px; }
+.info-prose li { margin: 3px 0; }
+.info-prose a { color: var(--accent-text); }
+
+.info-changelog-entry + .info-changelog-entry { margin-top: 14px; }
+.info-changelog-date {
+  font-size: 12px;
+  color: var(--fg-faint);
+  font-weight: 400;
+  margin-left: 6px;
+}
+
+@media (max-width: 640px) {
+  .info-modal {
+    grid-template-columns: 1fr;
+    /* 侧导航一行 + 内容区占满剩余高度 */
+    grid-template-rows: auto minmax(0, 1fr);
+    height: calc(100vh - 32px);
+    max-width: calc(100vw - 24px);
+  }
+  .info-side {
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-right: none;
+    border-bottom: 1px solid var(--border-faint);
+    padding: 8px;
+  }
+  .info-nav-item { padding: 7px 10px; }
+  .info-body { padding: 14px 16px; }
+}

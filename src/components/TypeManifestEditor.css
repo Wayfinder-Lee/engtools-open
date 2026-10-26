@@ -1,0 +1,229 @@
+/* 题型清单编辑器（试卷排版助手）——仅用全局 design tokens，不硬编码颜色 */
+
+.tme-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-raised);
+}
+
+.tme-card.tme-disabled {
+  opacity: 0.6;
+}
+
+.tme-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  color: var(--fg);
+}
+
+.tme-header:disabled {
+  cursor: not-allowed;
+}
+
+.tme-caret {
+  color: var(--fg-muted);
+  font-size: 11px;
+  transition: transform 0.15s ease;
+}
+
+.tme-header.open .tme-caret {
+  transform: rotate(90deg);
+}
+
+.tme-title {
+  font-weight: 600;
+}
+
+.tme-summary {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--fg-muted);
+}
+
+.tme-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  padding: 12px 14px 14px;
+  border-top: 1px solid var(--border-faint);
+}
+
+.tme-col-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg-2);
+  margin-bottom: 8px;
+}
+
+/* 左列：题型池 */
+.tme-pool {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tme-pool-chip {
+  border: 1px solid var(--border);
+  background: var(--bg-inset);
+  color: var(--fg-2);
+  border-radius: var(--radius-pill);
+  padding: 3px 10px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.tme-pool-chip:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent-text);
+  background: var(--accent-soft);
+}
+
+.tme-pool-chip:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.tme-pool-empty {
+  font-size: 12px;
+  color: var(--fg-faint);
+}
+
+.tme-custom-row {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.tme-custom-input {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 5px 10px;
+  font-size: 13px;
+  background: var(--bg-overlay);
+  color: var(--fg);
+}
+
+.tme-custom-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* 右列：已选题型（可拖拽排序） */
+.tme-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tme-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-overlay);
+  border-radius: var(--radius-sm);
+  padding: 5px 8px;
+}
+
+.tme-chip-live {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-sm);
+}
+
+.tme-grip {
+  cursor: grab;
+  color: var(--fg-faint);
+  user-select: none;
+  touch-action: none;
+  padding: 2px 4px;
+  font-size: 13px;
+}
+
+.tme-grip:active {
+  cursor: grabbing;
+  color: var(--fg-muted);
+}
+
+.tme-idx {
+  min-width: 16px;
+  text-align: right;
+  font-size: 12px;
+  color: var(--fg-muted);
+}
+
+.tme-name {
+  flex: 1;
+  font-size: 14px;
+  color: var(--fg);
+}
+
+.tme-ops {
+  display: flex;
+  gap: 2px;
+}
+
+.tme-op {
+  border: none;
+  background: none;
+  color: var(--fg-muted);
+  cursor: pointer;
+  padding: 2px 5px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+}
+
+.tme-op:hover:not(:disabled) {
+  background: var(--bg-inset);
+  color: var(--fg);
+}
+
+.tme-op:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.tme-empty {
+  font-size: 12px;
+  color: var(--fg-faint);
+}
+
+.tme-footer {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.tme-mini {
+  border: 1px solid var(--border);
+  background: none;
+  color: var(--fg-muted);
+  border-radius: var(--radius-sm);
+  padding: 3px 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.tme-mini:hover:not(:disabled) {
+  color: var(--fg);
+  border-color: var(--border-strong);
+}
+
+.tme-mini:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 720px) {
+  .tme-body {
+    grid-template-columns: 1fr;
+  }
+}

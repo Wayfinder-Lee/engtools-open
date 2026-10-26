@@ -1,0 +1,33 @@
+.mock-vocab { font-size: 13px; }
+
+.mock-section-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+.mock-section-row {
+  display: flex; align-items: center; gap: 8px; padding: 7px 10px;
+  border: 1px solid var(--border-faint); border-radius: var(--radius-sm); cursor: pointer;
+  background: var(--bg-overlay); transition: border-color 0.15s, background 0.15s;
+}
+.mock-section-row:hover { background: var(--accent-soft); }
+.mock-section-row.checked { border-color: var(--accent-soft-border); background: var(--accent-soft); }
+.mock-section-row input { accent-color: var(--accent); cursor: pointer; }
+.mock-section-name { font-weight: 600; color: var(--fg); }
+.mock-section-words { font-size: 11.5px; color: var(--fg-faint); margin-right: auto; }
+
+.mock-vocab-scroll { max-height: 190px; overflow-y: auto; border: 1px solid var(--border-faint); border-radius: var(--radius-sm); }
+.mock-vocab-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.mock-vocab-table th {
+  position: sticky; top: 0; text-align: left; padding: 6px 8px;
+  background: var(--bg-inset); color: var(--fg); white-space: nowrap; border-bottom: 1px solid var(--border);
+}
+.mock-vocab-table td { padding: 6px 8px; border-bottom: 1px solid var(--bg-inset); color: var(--fg); vertical-align: top; }
+.mock-vocab-table td:first-child { font-weight: 700; color: var(--accent-text); white-space: nowrap; }
+.mock-vocab-table td:nth-child(2) { white-space: nowrap; color: var(--fg-muted); }
+.mock-editable { border-bottom: 1px dashed var(--accent); cursor: text; }
+
+.mock-edit-hint { margin: 8px 0 0; font-size: 11.5px; color: var(--fg-faint); }
+
+.mock-word-list p, .mock-dict-list p { margin: 0 0 7px; color: var(--fg); }
+.mock-word-list strong { color: var(--accent-text); }
+.mock-dict-blank { color: var(--accent-text); letter-spacing: 1px; border-bottom: 1px solid var(--border); margin-left: 6px; }
+.mock-list-more { font-size: 11.5px; color: var(--fg-faint) !important; }
+
+.mock-vocab-footer { display: flex; gap: 10px; margin-top: 10px; padding-top: 12px; border-top: 1px solid var(--border-faint); }

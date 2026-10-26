@@ -1,0 +1,637 @@
+/* 听力剪辑（AudioEditor）—— ae- 前缀，颜色全部走 index.css design tokens */
+
+.ae-module {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* 页头：与其他模块页 sf-header 同款 subdued 渐变卡（无操作按钮，父级 gap 已提供间距） */
+.ae-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  background: linear-gradient(135deg, var(--accent-soft) 0%, var(--bg-raised) 100%);
+  border: 1px solid var(--accent-soft-border);
+  border-radius: var(--radius-md);
+  padding: 14px 20px;
+}
+
+.ae-title {
+  margin: 0 0 4px;
+  font-family: var(--font-serif);
+  font-size: 18px;
+  color: var(--fg);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ae-sub {
+  margin: 0;
+  font-size: 13px;
+  color: var(--fg-2);
+  line-height: 1.7;
+}
+
+/* ---- 卡片 ---- */
+.ae-card {
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ae-card-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ae-card-head h3 {
+  margin: 0;
+  font-size: 15px;
+  color: var(--fg);
+}
+
+.ae-card-hint {
+  font-size: 12px;
+  color: var(--fg-muted);
+}
+
+.ae-rebuilding {
+  font-size: 12px;
+  color: var(--warning);
+}
+
+/* ---- 按钮 ---- */
+.ae-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--fg);
+  background: var(--bg-raised);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.ae-btn:hover:not(:disabled) { background: var(--bg-inset); }
+.ae-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.ae-btn-primary {
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.ae-btn-primary:hover:not(:disabled) { background: var(--accent-hover); }
+
+.ae-btn-ghost {
+  font-weight: 500;
+  background: transparent;
+  border-color: var(--border);
+}
+.ae-btn-ghost:hover:not(:disabled) { background: var(--bg-inset); }
+
+.ae-tbtn { padding: 6px 12px; font-size: 12.5px; }
+
+/* 文件选择 input 藏进 label */
+.ae-btn input[type='file'] { display: none; }
+
+/* ---- 顶部提示条 ---- */
+.ae-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.ae-banner span { flex: 1; }
+.ae-banner .ae-banner-close {
+  border: none;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0 2px;
+  flex: none;
+}
+.ae-banner-error {
+  background: var(--danger-soft);
+  border: 1px solid var(--danger-border);
+  color: var(--danger);
+}
+.ae-banner-info {
+  background: var(--info-soft);
+  border: 1px solid var(--info-border);
+  color: var(--info);
+}
+/* 处理中提示（解码 / 变速 / 导出等 busy 状态，只读不可关闭） */
+.ae-banner-busy {
+  background: var(--bg-inset);
+  border: 1px solid var(--border);
+  color: var(--fg-2);
+}
+
+/* 恢复上次编辑询问条：accent 浅底 + 行内主次按钮 */
+.ae-banner-restore {
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-soft-border);
+  color: var(--fg-2);
+  display: flex;
+  align-items: center;
+}
+.ae-banner-restore span { color: var(--fg-2); }
+
+/* ---- 危险按钮（清除音频） ---- */
+.ae-btn-danger {
+  color: var(--danger);
+  background: transparent;
+  border-color: var(--danger-border);
+}
+.ae-btn-danger:hover:not(:disabled) {
+  color: #fff;
+  background: var(--danger);
+  border-color: var(--danger);
+}
+
+/* ---- 加载行 ---- */
+.ae-load-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.ae-templates { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+/* ---- 编辑区 ---- */
+.ae-editor-zone { display: flex; flex-direction: column; gap: 12px; }
+
+.ae-transport { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.ae-transport-sep { width: 1px; height: 20px; background: var(--border); margin: 0 4px; }
+.ae-time {
+  margin-left: auto;
+  font-size: 13px;
+  color: var(--fg-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.ae-wave-holder { position: relative; }
+
+.ae-wave {
+  border: 1px solid var(--border-faint);
+  border-radius: var(--radius-sm);
+  background: var(--bg-overlay);
+  padding: 10px 6px 2px;
+  min-height: 168px;
+}
+
+.ae-empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: 1.5px dashed var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg-overlay);
+  color: var(--fg-muted);
+  font-size: 13px;
+  text-align: center;
+  padding: 20px;
+}
+.ae-empty p { margin: 2px 0; }
+
+/* ---- 播放头标尺（波形上方的可拖动时间标签） ---- */
+.ae-ph-ruler {
+  position: relative;
+  height: 16px;
+  border-radius: var(--radius-pill);
+  background:
+    repeating-linear-gradient(90deg, var(--border-faint) 0 1px, transparent 1px 48px) center /
+      100% 6px no-repeat,
+    var(--bg-inset);
+  cursor: pointer;
+  touch-action: none;
+}
+
+.ae-ph-handle {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  background: var(--accent);
+  color: #fff;
+  font-size: 11px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-sm);
+  white-space: nowrap;
+  user-select: none;
+  cursor: grab;
+}
+.ae-ph-handle:active { cursor: grabbing; }
+.ae-ph-handle:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 1px;
+}
+
+/* ---- 缩放行 + minimap 总览 ---- */
+.ae-zoom-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ae-zoom-label {
+  flex: none;
+  font-size: 12px;
+  color: var(--fg-muted);
+}
+.ae-zoom-slider {
+  flex: 1;
+  min-width: 120px;
+  height: 4px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.ae-zoom-level {
+  flex: none;
+  min-width: 76px;
+  text-align: right;
+  font-size: 12px;
+  color: var(--fg-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.ae-minimap {
+  border: 1px solid var(--border-faint);
+  border-radius: var(--radius-sm);
+  background: var(--bg-overlay);
+  padding: 5px 6px;
+  overflow: hidden;
+}
+/* minimap 插件渲染进容器的根 div（light DOM，带 part 标记） */
+.ae-minimap > div[part='minimap'] {
+  border-radius: 2px;
+}
+
+/* ---- 操作行 ---- */
+.ae-ops { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.ae-silence-input {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--fg-2);
+}
+.ae-silence-input input {
+  width: 76px;
+  padding: 6px 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: var(--fg);
+  background: var(--bg-overlay);
+}
+.ae-silence-input input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(217, 119, 87, 0.15);
+}
+.ae-ops-hint { font-size: 12px; color: var(--fg-muted); }
+
+/* ---- 片段列表 ---- */
+.ae-clear {
+  margin-left: auto;
+  border: none;
+  background: none;
+  color: var(--danger);
+  font-size: 12.5px;
+  cursor: pointer;
+  padding: 2px 4px;
+}
+.ae-clear:hover { text-decoration: underline; }
+
+.ae-segments {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.ae-seg {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+  border: 1px solid var(--border-faint);
+  border-radius: var(--radius-sm);
+  background: var(--bg-overlay);
+  font-size: 13px;
+}
+.ae-seg-silence {
+  background: var(--bg-inset);
+  border-style: dashed;
+}
+.ae-seg-idx {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--bg-inset);
+  color: var(--fg-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+.ae-seg-silence .ae-seg-idx { background: var(--bg-active); }
+.ae-seg-label {
+  flex: 1;
+  min-width: 0;
+  color: var(--fg-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ae-seg-time { flex: none; color: var(--fg-muted); font-variant-numeric: tabular-nums; }
+.ae-seg-del {
+  flex: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 13px;
+  padding: 2px 4px;
+  opacity: 0.55;
+}
+.ae-seg-del:hover { opacity: 1; }
+
+/* ---- 导出 ---- */
+.ae-export-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.ae-filename {
+  flex: 1;
+  min-width: 180px;
+  padding: 8px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: var(--fg);
+  background: var(--bg-overlay);
+}
+.ae-filename:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(217, 119, 87, 0.15);
+}
+.ae-ext { font-size: 13px; color: var(--fg-muted); font-variant-numeric: tabular-nums; }
+.ae-format {
+  padding: 8px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: var(--fg);
+  background: var(--bg-overlay);
+  cursor: pointer;
+}
+.ae-progress {
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-inset);
+  overflow: hidden;
+}
+.ae-progress > div {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent);
+  transition: width 0.2s ease;
+}
+.ae-footnote {
+  margin: 0;
+  font-size: 12px;
+  color: var(--fg-faint);
+  line-height: 1.7;
+}
+
+/* ---- 变速（不变调）弹窗 ---- */
+.ae-speed-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(46, 42, 36, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.ae-speed-pop {
+  background: var(--bg-overlay);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 480px;
+  box-shadow: var(--shadow-lg);
+}
+
+.ae-speed-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-faint);
+}
+.ae-speed-head h3 {
+  margin: 0;
+  font-size: 15px;
+  color: var(--fg);
+}
+.ae-speed-close {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  font-size: 15px;
+  color: var(--fg-faint);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+}
+.ae-speed-close:hover {
+  background: var(--bg-inset);
+  color: var(--fg-2);
+}
+
+.ae-speed-body {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ae-speed-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.ae-speed-label {
+  flex: none;
+  width: 56px;
+  font-size: 12.5px;
+  color: var(--fg-muted);
+}
+.ae-speed-radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--fg-2);
+  cursor: pointer;
+}
+.ae-speed-radio input {
+  accent-color: var(--accent);
+  margin: 0;
+}
+.ae-speed-radio.is-disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.ae-speed-presets {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.ae-speed-preset {
+  padding: 5px 11px;
+  font-size: 12.5px;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--fg-2);
+  background: var(--bg-raised);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.ae-speed-preset:hover:not(:disabled) {
+  background: var(--bg-inset);
+}
+.ae-speed-preset:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.ae-speed-preset.is-active {
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.ae-speed-preset.is-active:hover {
+  background: var(--accent-hover);
+}
+
+.ae-speed-num-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12.5px;
+  color: var(--fg-muted);
+}
+.ae-speed-num {
+  width: 72px;
+  padding: 6px 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: var(--fg);
+  background: var(--bg-overlay);
+}
+.ae-speed-num:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(217, 119, 87, 0.15);
+}
+
+.ae-speed-dur {
+  font-size: 13px;
+  color: var(--fg-2);
+  font-variant-numeric: tabular-nums;
+  background: var(--bg-inset);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+}
+
+.ae-speed-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ae-speed-hint {
+  font-size: 12px;
+  color: var(--fg-muted);
+}
+
+.ae-speed-note {
+  margin: 0;
+  font-size: 12px;
+  color: var(--fg-faint);
+  line-height: 1.7;
+}
+
+/* ---- 合成语音（TTS）弹窗：骨架复用 ae-speed-*，仅补专属件 ---- */
+.ae-tts-text {
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  min-height: 84px;
+  padding: 10px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg-overlay);
+  font: inherit;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--fg);
+}
+.ae-tts-text:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(217, 119, 87, 0.15);
+}
+.ae-tts-text:disabled {
+  opacity: 0.55;
+}
+.ae-tts-count {
+  margin-top: 4px;
+  text-align: right;
+  font-size: 12px;
+  color: var(--fg-faint);
+  font-variant-numeric: tabular-nums;
+}
+.ae-tts-error {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--danger);
+  line-height: 1.6;
+}
+.ae-tts-preview {
+  width: 100%;
+  height: 40px;
+}

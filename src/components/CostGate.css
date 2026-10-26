@@ -1,0 +1,78 @@
+/* 额度确认卡 / 兑换引导卡（轻量 modal，非原生 confirm） */
+
+.costgate-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 25, 20, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.costgate-card {
+  background: var(--bg-raised);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 20px 22px;
+  width: min(400px, 100%);
+}
+
+.costgate-card h4 {
+  margin: 0 0 10px;
+  font-size: 15px;
+  color: var(--fg);
+}
+
+.costgate-what {
+  margin: 0 0 10px;
+  font-size: 13.5px;
+  color: var(--fg-2);
+  line-height: 1.6;
+}
+
+.costgate-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--fg-muted);
+  padding: 10px 12px;
+  background: var(--bg-inset);
+  border-radius: var(--radius-sm);
+  margin-bottom: 10px;
+}
+.costgate-rows strong { color: var(--fg); }
+
+.costgate-note {
+  margin: 0 0 10px;
+  font-size: 12.5px;
+  color: var(--fg-muted);
+  line-height: 1.6;
+}
+
+.costgate-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.costgate-btn {
+  padding: 7px 18px;
+  font-size: 13px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: var(--bg-overlay);
+  color: var(--fg-2);
+  cursor: pointer;
+}
+.costgate-btn:hover { border-color: var(--border-strong); color: var(--fg); }
+
+.costgate-btn.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.costgate-btn.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); color: #fff; }

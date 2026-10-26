@@ -1,0 +1,6 @@
+/* 图标基类：inline-block 对齐 + 不收缩；按钮内排布由 App.css 的 button:has(>.icon) 全局接管 */
+.icon {
+  display: inline-block;
+  vertical-align: -0.15em;
+  flex-shrink: 0;
+}

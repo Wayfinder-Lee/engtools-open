@@ -1,0 +1,613 @@
+/* ===== 工具栏 ===== */
+.table-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.table-count {
+  font-size: 14px;
+  color: var(--fg-2);
+}
+
+.table-toolbar-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn-add-word {
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-text);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-soft-border);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-add-word:hover {
+  background: var(--accent-soft-border);
+  border-color: var(--accent);
+}
+
+.btn-export-docx {
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--tag-purple-text);
+  background: var(--tag-purple-bg);
+  border: 1px solid var(--tag-purple-border);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-export-docx:hover {
+  background: var(--tag-purple-border);
+}
+
+.btn-export {
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--success);
+  background: var(--success-soft);
+  border: 1px solid var(--success-border);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+/* Docx export options dropdown */
+.docx-export-group {
+  position: relative;
+}
+
+.docx-options-panel {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 6px;
+  background: var(--bg-overlay);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  min-width: 240px;
+  box-shadow: var(--shadow-lg);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.docx-options-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--fg-2);
+  margin-bottom: 4px;
+}
+
+.docx-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--fg);
+  cursor: pointer;
+}
+
+.docx-option input[type="checkbox"] {
+  accent-color: var(--accent);
+}
+
+.btn-export-docx-go {
+  margin-top: 8px;
+  padding: 7px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-export-docx-go:hover:not(:disabled) { background: var(--accent-hover); }
+.btn-export-docx-go:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-export:hover {
+  background: var(--success-border);
+}
+
+/* ===== Section blocks ===== */
+.section-block {
+  margin-bottom: 24px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.section-block-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: var(--bg-inset);
+  border-bottom: 2px solid var(--border);
+}
+
+.section-block-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--fg);
+}
+
+.section-block-count {
+  font-size: 12px;
+  color: var(--fg-muted);
+}
+
+.section-block-mobile {
+  margin-bottom: 24px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+/* ===== Section table ===== */
+.section-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.section-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.section-table th {
+  background: var(--bg-inset);
+  color: var(--fg);
+  font-weight: 700;
+  text-align: left;
+  padding: 8px 8px;
+  border-bottom: 1px solid var(--border-strong);
+  white-space: nowrap;
+  font-size: 12px;
+}
+
+.section-table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--border-faint);
+  vertical-align: top;
+}
+
+.section-table tbody tr:hover {
+  background: var(--accent-soft);
+}
+
+/* ===== Drag handle ===== */
+.col-drag {
+  width: 28px;
+  text-align: center !important;
+  vertical-align: middle !important;
+  padding: 10px 0 !important;
+}
+
+.drag-handle {
+  display: inline-block;
+  cursor: grab;
+  color: var(--fg-faint);
+  font-size: 14px;
+  letter-spacing: -2px;
+  -webkit-user-select: none;
+  user-select: none;
+  line-height: 1;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: all 0.15s;
+}
+
+.drag-handle:hover {
+  color: var(--fg-2);
+  background: var(--bg-active);
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+  color: var(--accent-text);
+  background: var(--accent-soft);
+}
+
+.draggable-row {
+  cursor: default;
+}
+
+.draggable-row:active {
+  cursor: grabbing;
+}
+
+/* ===== Column widths (unchanged) ===== */
+.col-id { width: 44px; text-align: center !important; }
+.col-actions-th { width: 36px; text-align: center !important; }
+.col-actions { width: 36px; text-align: center !important; vertical-align: middle !important; }
+.col-word { min-width: 85px; }
+.col-phonetic { min-width: 90px; }
+.col-def { min-width: 200px; }
+.col-coll { min-width: 160px; }
+.col-example { min-width: 220px; }
+.col-memory { min-width: 160px; }
+.col-freq { width: 66px; text-align: center !important; }
+.col-original { min-width: 220px; }
+.col-source { min-width: 85px; }
+
+.section-table td.col-id {
+  color: var(--fg-muted);
+  font-size: 12px;
+}
+
+/* ===== Per-section add button ===== */
+.btn-section-add {
+  display: block;
+  width: 100%;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent-text);
+  background: var(--bg-overlay);
+  border: none;
+  border-top: 1px dashed var(--accent-soft-border);
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: center;
+}
+
+.btn-section-add:hover {
+  background: var(--accent-soft);
+  color: var(--accent-text-hover);
+}
+
+/* 双语释义 */
+.col-def {
+  font-size: 12.5px;
+}
+
+/* 例句加粗渲染 */
+.sentence-html {
+  font-size: 12.5px;
+  color: var(--fg-2);
+  line-height: 1.6;
+}
+
+.sentence-html strong {
+  color: var(--accent-text);
+  font-weight: 700;
+}
+
+/* 来源标签 */
+.source-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.source-main_idea {
+  background: var(--tag-blue-bg);
+  color: var(--tag-blue-text);
+}
+
+.source-evidence {
+  background: var(--tag-orange-bg);
+  color: var(--tag-orange-text);
+}
+
+.source-question_stem {
+  background: var(--tag-green-bg);
+  color: var(--tag-green-text);
+}
+
+.source-option {
+  background: var(--tag-purple-bg);
+  color: var(--tag-purple-text);
+}
+
+.source-custom {
+  background: var(--bg-inset);
+  color: var(--fg-2);
+  border: 1px dashed var(--fg-faint);
+}
+
+/* 操作按钮组 */
+.action-btns {
+  display: flex;
+  gap: 2px;
+  justify-content: center;
+}
+
+.btn-move {
+  padding: 1px 5px;
+  font-size: 10px;
+  line-height: 1.4;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  cursor: pointer;
+  opacity: 0.35;
+  transition: all 0.15s;
+}
+
+.btn-move:hover:not(:disabled) {
+  opacity: 1;
+  background: var(--accent-soft);
+  border-color: var(--accent-soft-border);
+}
+
+.btn-move:disabled {
+  opacity: 0.1;
+  cursor: not-allowed;
+}
+
+.btn-delete-row {
+  padding: 1px 5px;
+  font-size: 13px;
+  line-height: 1.4;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  cursor: pointer;
+  opacity: 0.35;
+  transition: all 0.15s;
+}
+
+.btn-delete-row:hover {
+  opacity: 1;
+  background: var(--danger-soft);
+  border-color: var(--danger-border);
+}
+
+/* 可编辑单元格 */
+.cell-display {
+  display: block;
+  cursor: pointer;
+  min-height: 18px;
+  padding: 2px 4px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.cell-display:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent-soft-border);
+}
+
+.cell-empty {
+  color: var(--fg-faint);
+  font-style: italic;
+}
+
+.cell-edit {
+  width: 100%;
+  padding: 2px 4px;
+  font-family: inherit;
+  font-size: inherit;
+  border: 1.5px solid var(--accent);
+  border-radius: 3px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.cell-edit-textarea {
+  min-height: 60px;
+  resize: vertical;
+}
+
+.no-fields-hint {
+  text-align: center;
+  color: var(--fg-muted);
+  padding: 40px;
+  font-size: 14px;
+}
+
+/* ===== 移动端卡片（默认隐藏） ===== */
+.table-mobile {
+  display: none;
+}
+
+.vocab-card {
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+
+.vocab-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  cursor: pointer;
+  user-select: none;
+  background: var(--bg-inset);
+}
+
+.vocab-card-header:hover {
+  background: var(--bg-active);
+}
+
+.card-id {
+  font-size: 12px;
+  color: var(--fg-muted);
+  min-width: 24px;
+}
+
+.card-word {
+  font-weight: 700;
+  font-size: 15px;
+  flex: 1;
+}
+
+.card-freq {
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.card-expand {
+  font-size: 10px;
+  color: var(--fg-faint);
+}
+
+.vocab-card-body {
+  padding: 14px;
+  border-top: 1px solid var(--border-faint);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card-field {
+  display: flex;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.card-field label {
+  font-weight: 600;
+  color: var(--fg-2);
+  min-width: 70px;
+  flex-shrink: 0;
+}
+
+.vocab-card-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 14px;
+  border-top: 1px solid var(--border-faint);
+  background: var(--bg-raised);
+}
+
+.vocab-card-footer .btn-delete-row {
+  font-size: 12px;
+  opacity: 0.7;
+  padding: 4px 10px;
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 1200px) {
+  .table-desktop {
+    display: none;
+  }
+  .table-mobile {
+    display: block;
+  }
+  .table-toolbar-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+/* 目录锚点跳转偏移：避开吸顶流程条 */
+.section-block { scroll-margin-top: 112px; }
+
+/* M1：词条「换一个」按钮（免费 word 操作） */
+.btn-regen-row {
+  border: 1px solid var(--border);
+  background: var(--bg-overlay);
+  color: var(--fg-2);
+  border-radius: var(--radius-sm);
+  padding: 2px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  margin-right: 4px;
+}
+.btn-regen-row:hover:not(:disabled) { border-color: var(--accent); color: var(--accent-text); }
+.btn-regen-row:disabled { opacity: 0.5; cursor: wait; }
+
+/* ─── M3/M4：词库、配套材料、频次筛选 ─────────────── */
+.btn-bank {
+  border: 1px solid var(--border);
+  background: var(--bg-overlay);
+  color: var(--fg-2);
+  border-radius: var(--radius-pill);
+  padding: 6px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn-bank:hover:not(:disabled) { border-color: var(--accent); color: var(--accent-text); }
+
+.bank-msg { font-size: 12px; color: var(--success); white-space: nowrap; }
+
+.extras-group { position: relative; }
+.extras-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 60;
+  width: 300px;
+  max-width: calc(100vw - 48px);
+  background: var(--bg-overlay);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.extras-title { font-size: 12px; color: var(--fg-faint); margin-bottom: 4px; }
+.extras-item {
+  text-align: left;
+  border: 1px solid var(--border-faint);
+  background: var(--bg-raised);
+  color: var(--fg-2);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.extras-item:hover { border-color: var(--accent); color: var(--accent-text); background: var(--accent-soft); }
+
+.freq-filter { display: inline-flex; gap: 2px; padding: 2px; background: var(--bg-inset); border-radius: var(--radius-pill); }
+.freq-pill {
+  border: none;
+  background: transparent;
+  color: var(--fg-muted);
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+}
+.freq-pill.active { background: var(--bg-overlay); color: var(--fg); font-weight: 600; box-shadow: var(--shadow-sm); }
+
+.freq-tag { font-size: 12px; letter-spacing: 1px; padding: 1px 6px; border-radius: var(--radius-sm); }
+.freq-high { color: var(--success); background: var(--success-soft); }
+.freq-mid { color: var(--fg-2); background: var(--bg-inset); }
+.freq-low { color: var(--fg-muted); background: var(--bg-inset); }
+.freq-potential { color: var(--fg-faint); background: var(--bg-inset); }
+
+.docx-options-sub { display: flex; align-items: center; flex-wrap: wrap; gap: 2px 10px; }
+.docx-options-label { font-size: 12px; color: var(--fg-faint); }
+.docx-option-compact { font-size: 12.5px; }
+.docx-estimate {
+  font-size: 12px;
+  color: var(--fg-faint);
+  padding: 4px 0 0;
+  border-top: 1px dashed var(--border-faint);
+}

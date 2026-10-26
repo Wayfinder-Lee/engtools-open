@@ -1,0 +1,49 @@
+/* Auth (login / register) card — used inside the hero right column */
+.auth-card {
+  width: 100%; background: var(--bg-raised); border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px; box-shadow: var(--shadow-lg);
+  box-sizing: border-box;
+}
+.auth-tabs { display: flex; gap: 0; margin-bottom: 20px; border-bottom: 2px solid var(--border-faint); }
+.auth-tab {
+  flex: 1; padding: 10px 0; font-size: 16px; font-weight: 600; color: var(--fg-faint);
+  background: none; border: none; cursor: pointer; border-bottom: 2px solid transparent;
+  margin-bottom: -2px; transition: color 0.15s, border-color 0.15s;
+}
+.auth-tab:hover { color: var(--fg-muted); }
+.auth-tab.active { color: var(--accent-text); border-bottom-color: var(--accent); }
+.auth-form { display: flex; flex-direction: column; gap: 12px; }
+.auth-input {
+  padding: 11px 14px; font-size: 15px; border: 1.5px solid var(--border);
+  border-radius: var(--radius-md); background: var(--bg-overlay);
+  color: var(--fg); transition: border-color 0.15s, box-shadow 0.15s;
+}
+.auth-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(217, 119, 87, 0.15); }
+.auth-input:disabled { background: var(--bg-inset); color: var(--fg-faint); }
+.auth-input::placeholder { color: var(--fg-faint); }
+
+.verify-row { display: flex; gap: 8px; }
+.verify-input { flex: 1; min-width: 0; }
+.send-code-btn {
+  padding: 0 14px; font-size: 13px; font-weight: 600; white-space: nowrap;
+  color: var(--accent-text); background: var(--accent-soft); border: 1.5px solid var(--accent);
+  border-radius: var(--radius-md); cursor: pointer; transition: all 0.15s;
+}
+.send-code-btn:hover:not(:disabled) { background: var(--accent-soft-border); }
+.send-code-btn:disabled { color: var(--fg-faint); border-color: var(--border); background: var(--bg-inset); cursor: not-allowed; }
+.auth-btn {
+  padding: 11px 24px; font-size: 15px; font-weight: 600; color: #fff;
+  background: var(--accent); border: none; border-radius: var(--radius-pill);
+  cursor: pointer; transition: background 0.15s; margin-top: 4px;
+}
+.auth-btn:hover:not(:disabled) { background: var(--accent-hover); }
+.auth-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.auth-error { font-size: 13px; color: var(--danger); margin: 4px 0 0; }
+.auth-hint { font-size: 12px; color: var(--fg-faint); margin: 4px 0 0; text-align: center; }
+.auth-success { font-size: 13px; color: var(--success); margin: 4px 0 0; text-align: center; }
+.link-inline { font-size: 12px; color: var(--accent-text); background: none; border: none; cursor: pointer; text-decoration: underline; }
+.link-inline:hover { color: var(--accent-text-hover); }
+
+.auth-tab-link { font-size: 14px; color: var(--accent-text); background: none; border: none; cursor: pointer; margin-right: 0; margin-left: auto; }
+.auth-tab-link:hover { color: var(--accent-text-hover); }

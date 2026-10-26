@@ -1,0 +1,28 @@
+.mock-continuation { font-size: 13px; }
+
+.mock-story-card {
+  background: linear-gradient(135deg, var(--accent-soft), var(--bg-raised));
+  border: 1px solid var(--accent-soft-border); border-radius: var(--radius-sm);
+  padding: 10px 14px; margin-bottom: 12px;
+}
+.mock-story-card p { margin: 0; font-style: italic; color: var(--fg-2); line-height: 1.65; }
+.mock-story-para1 { margin-top: 6px !important; font-weight: 600; color: var(--fg) !important; }
+
+.mock-cw-para { margin: 0 0 10px; line-height: 1.7; color: var(--fg); }
+.mock-cw-para strong { color: var(--fg); }
+
+.mock-method-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.mock-method-table th {
+  text-align: left; padding: 6px 8px; background: var(--bg-inset); color: var(--fg);
+  border-bottom: 1px solid var(--border); white-space: nowrap;
+}
+.mock-method-table td { padding: 6px 8px; border-bottom: 1px solid var(--bg-inset); color: var(--fg); vertical-align: top; }
+.mock-method-table td:first-child { white-space: nowrap; font-weight: 600; color: var(--accent-text); }
+.mock-method-table td:nth-child(2) { white-space: nowrap; }
+.mock-method-more td { text-align: center; color: var(--fg-faint); font-size: 12px; border-bottom: none; }
+
+.mock-pattern-group { margin-bottom: 8px; }
+.mock-pattern-label {
+  display: inline-block; font-size: 12px; font-weight: 700; color: var(--fg);
+  background: var(--bg-inset); padding: 2px 9px; border-radius: 4px; margin-right: 8px;
+}

@@ -1,0 +1,48 @@
+/* 「我的账户」弹窗内容（复用 InfoModal 的 overlay/modal/nav/body 骨架） */
+
+.am-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.am-table th, .am-table td {
+  text-align: left;
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--border-faint);
+  vertical-align: top;
+}
+.am-table th { color: var(--fg-muted); font-weight: 500; width: 96px; white-space: nowrap; }
+.am-table td { color: var(--fg); }
+
+.am-note { font-size: 12.5px; color: var(--fg-muted); margin-top: 12px; line-height: 1.7; }
+
+.am-stage-switch { display: inline-flex; margin-top: 10px; }
+
+.am-form { display: flex; flex-direction: column; gap: 6px; max-width: 340px; }
+.am-form label { font-size: 12.5px; color: var(--fg-muted); margin-top: 8px; }
+.am-form input {
+  padding: 9px 12px;
+  font-size: 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-overlay);
+  color: var(--fg);
+}
+.am-form input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(217, 119, 87, 0.15); }
+
+.am-btn {
+  margin-top: 14px;
+  align-self: flex-start;
+  padding: 9px 22px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+}
+.am-btn:hover:not(:disabled) { background: var(--accent-hover); }
+.am-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.am-btn-danger { background: var(--danger); }
+.am-btn-danger:hover:not(:disabled) { background: var(--danger); filter: brightness(0.92); }
+
+.am-msg { font-size: 12.5px; margin-top: 10px; }
+.am-msg.ok { color: var(--success); }
+.am-msg.err { color: var(--danger); }

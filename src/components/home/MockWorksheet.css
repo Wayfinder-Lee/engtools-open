@@ -1,0 +1,46 @@
+.mock-worksheet { font-size: 13px; }
+
+.mock-upload-row { display: flex; gap: 14px; align-items: center; margin-bottom: 14px; }
+.mock-hw-img {
+  /* 答题卡截图为横版（≈16:9），object-fit 裁掉边缘留白 */
+  width: 150px; height: 84px; object-fit: cover; border-radius: var(--radius-sm);
+  border: 1px solid var(--border); flex-shrink: 0;
+}
+.mock-upload-meta { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.mock-student-chip {
+  font-size: 13px; font-weight: 700; color: var(--accent-text); background: var(--accent-soft);
+  padding: 3px 10px; border-radius: var(--radius-pill); width: fit-content;
+}
+.mock-ocr-status { font-size: 12.5px; color: var(--success); font-weight: 600; }
+.mock-ocr-caption { font-size: 11px; color: var(--fg-faint); }
+
+.mock-error-row {
+  display: flex; gap: 10px; align-items: flex-start; padding: 8px 10px;
+  border-radius: var(--radius-sm); transition: background 0.15s;
+}
+.mock-error-row:hover { background: var(--accent-soft); }
+.mock-err-badge {
+  font-size: 11px; font-weight: 700; color: var(--danger); background: var(--danger-soft);
+  border: 1px solid var(--danger-border); border-radius: 4px; padding: 1px 7px; white-space: nowrap; margin-top: 2px;
+}
+.mock-err-line { margin: 0; color: var(--fg-muted); text-decoration: line-through; text-decoration-color: rgba(199, 53, 31, 0.4); }
+.mock-orig-line { margin: 0; color: var(--fg-muted); }
+.mock-fix-line { margin: 2px 0 0; color: var(--fg); font-weight: 500; }
+
+.mock-drill-item { margin: 0 0 10px; padding: 7px 10px; background: var(--bg-inset); border-radius: var(--radius-sm); color: var(--fg); display: flex; align-items: baseline; gap: 8px; }
+.mock-blank { border-bottom: 2px dotted var(--accent); color: var(--accent-text); letter-spacing: 1px; }
+.mock-blank-line { flex: 1; min-width: 60px; border-bottom: 2px dotted var(--fg-faint); }
+
+.mock-up-badge {
+  font-size: 11px; font-weight: 700; color: var(--success); background: var(--success-soft);
+  border: 1px solid var(--success-border); border-radius: 4px; padding: 1px 7px; white-space: nowrap; margin-top: 2px;
+}
+
+.mock-ws-footer {
+  display: flex; align-items: center; gap: 10px; margin-top: 14px;
+  padding-top: 12px; border-top: 1px solid var(--border-faint);
+}
+.mock-print-preview { margin-left: auto; display: flex; align-items: center; gap: 6px; }
+.mock-print-preview img { width: 42px; height: 58px; object-fit: cover; border: 1px solid var(--border); border-radius: 4px; }
+.mock-print-ph { width: 42px; height: 58px; font-size: 16px; }
+.mock-print-preview span { font-size: 11px; color: var(--fg-faint); }

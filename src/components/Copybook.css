@@ -1,0 +1,154 @@
+/* 衡水体字体（Apache 2.0 授权，内部使用） */
+@font-face {
+  font-family: 'Hengshui';
+  src: url('/fonts/hengshui.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.copybook-module { max-width: 100%; }
+
+.cb-layout {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+/* 左侧控制区 */
+.cb-controls {
+  flex: 0 0 360px;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cb-control-block {
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cb-control-title { font-size: 13px; font-weight: 700; color: var(--fg); }
+.cb-control-hint { font-size: 11px; color: var(--fg-muted); line-height: 1.5; }
+
+/* 同一卡片内的分组（线格类型 / 生成模式） */
+.cb-subgroup { display: flex; flex-direction: column; gap: 8px; }
+.cb-subgroup + .cb-subgroup { border-top: 1px solid var(--bg-inset); padding-top: 12px; }
+
+/* 选择条铺满卡片宽度 */
+.cb-control-block .level-pills { width: 100%; }
+.cb-control-block .level-pill { flex: 1; text-align: center; padding-left: 0; padding-right: 0; }
+
+/* 复选框（学生姓名栏） */
+.cb-checkbox {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: var(--fg-2); cursor: pointer; -webkit-user-select: none; user-select: none;
+  white-space: nowrap;
+}
+.cb-checkbox input[type='checkbox'] { width: 15px; height: 15px; accent-color: var(--accent); cursor: pointer; margin: 0; }
+
+.cb-text-input,
+.cb-topic-input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  color: var(--fg);
+  background: var(--bg-overlay);
+  box-sizing: border-box;
+}
+.cb-topic-input { flex: 1; min-width: 140px; font-size: 13px; }
+.cb-text-input:focus,
+.cb-topic-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(217, 119, 87, 0.15);
+}
+
+.btn-ai {
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--success);
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn-ai:hover:not(:disabled) { background: var(--success-hover); }
+.btn-ai:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* 滑块 */
+.cb-slider { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--fg-2); }
+.cb-slider-icon { flex: 0 0 auto; display: flex; align-items: center; color: var(--fg-muted); }
+.cb-slider label { flex: 0 0 auto; font-weight: 600; white-space: nowrap; }
+.cb-slider input[type='range'] { flex: 1; min-width: 0; accent-color: var(--accent); }
+.cb-slider-value { flex: 0 0 auto; min-width: 42px; text-align: right; color: var(--fg-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* 颜色 */
+.cb-color-row { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--fg-2); }
+.cb-color-icon { flex: 0 0 auto; display: flex; align-items: center; color: var(--fg-muted); }
+.cb-color-row > label { flex: 0 0 auto; font-weight: 600; white-space: nowrap; }
+.cb-color-row input[type='color'] {
+  width: 40px; height: 30px; padding: 0;
+  border: 1px solid var(--border-strong); border-radius: 4px;
+  background: var(--bg-overlay); cursor: pointer;
+}
+.cb-color-row .cb-slider { flex: 1; min-width: 0; }
+
+/* 右侧预览区 */
+.cb-preview-wrap { flex: 1; min-width: 320px; }
+.cb-toolbar { display: flex; justify-content: flex-end; margin-bottom: 12px; }
+
+.cb-preview { display: flex; flex-direction: column; gap: 24px; align-items: center; }
+.cb-page-canvas {
+  display: block;
+  width: min(100%, 640px);
+  height: auto;
+  background: #fff;
+  box-shadow: var(--shadow-md);
+  border-radius: 2px;
+}
+.cb-loading, .cb-empty { color: var(--fg-muted); font-size: 13px; padding: 24px; }
+
+/* ─── 打印 ─────────────────────────────────────── */
+/* 打印规则仅在字帖 tab 激活时生效：Copybook.tsx 挂载时给 <body> 加 .copybook-active，
+   避免全局规则影响其它 tab 的浏览器打印。@page 无法用选择器限定作用域，
+   故由 Copybook.tsx 挂载期间动态注入（#copybook-page-css）。 */
+@media print {
+  body.copybook-active * { visibility: hidden !important; }
+  body.copybook-active .cb-preview,
+  body.copybook-active .cb-preview * { visibility: visible !important; }
+  body.copybook-active .cb-preview {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    gap: 0;
+    align-items: flex-start;
+  }
+  body.copybook-active .cb-page-canvas {
+    width: 210mm;
+    height: 297mm;
+    box-shadow: none;
+    border-radius: 0;
+    page-break-after: always;
+  }
+  body.copybook-active .cb-page-canvas:last-child { page-break-after: auto; }
+  body.copybook-active .cb-toolbar,
+  body.copybook-active .cb-loading,
+  body.copybook-active .cb-empty { display: none !important; }
+}
+
+/* M3：词库生成按钮 */
+.btn-bank-gen { border: 1px dashed var(--border-strong); }

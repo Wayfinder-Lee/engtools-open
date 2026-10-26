@@ -1,0 +1,140 @@
+/* 看图/图表作文：题干配图上传 + AI 读图（pir- 前缀，token 制，暗色自动适配） */
+
+.pir {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.pir-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 触发 chip：与 .pw-template-chip 同视觉语言 */
+.pir-chip {
+  padding: 4px 14px;
+  font-size: 12.5px;
+  color: var(--fg-2);
+  background: var(--bg-inset);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.pir-chip:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent-text);
+  background: var(--accent-soft);
+}
+
+.pir-chip:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pir-hint {
+  font-size: 12px;
+  color: var(--fg-faint);
+}
+
+/* 选中后：缩略图 + 文件名 + 模型 + 读图按钮 */
+.pir-preview {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  background: var(--bg-inset);
+  border-radius: var(--radius-sm);
+}
+
+.pir-thumb {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.pir-name {
+  font-size: 12px;
+  color: var(--fg-muted);
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pir-model {
+  width: 130px;
+  padding: 4px 8px;
+  font-size: 12.5px;
+  color: var(--fg);
+  background: var(--bg-overlay);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.pir-read {
+  padding: 5px 12px;
+  font-size: 12.5px;
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.pir-read:hover:not(:disabled) { background: var(--accent-hover); }
+
+.pir-read:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pir-remove {
+  padding: 2px 6px;
+  font-size: 14px;
+  color: var(--fg-faint);
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.pir-remove:hover:not(:disabled) {
+  color: var(--danger);
+  background: var(--bg-overlay);
+}
+
+.pir-remove:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pir-busy {
+  font-size: 12px;
+  color: var(--fg-faint);
+}
+
+.pir-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--danger);
+}
+
+.pir-retry {
+  padding: 2px 10px;
+  font-size: 12px;
+  color: var(--danger);
+  background: var(--danger-soft);
+  border: 1px solid var(--danger-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}

@@ -1,0 +1,67 @@
+.fab-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* 按钮锚定右缘：悬停向左展开胶囊时，兄弟按钮保持原位不被推走 */
+  gap: 8px;
+}
+
+/* 圆形图标钮 → 悬停横向展开胶囊，文字滑入 */
+.fab-btn {
+  height: 44px;
+  width: 44px;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  white-space: nowrap;
+  box-shadow: var(--shadow-md);
+  transition: width 0.25s ease, background 0.15s, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fab-btn:hover {
+  background: var(--accent-hover);
+  width: 112px;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lg);
+}
+
+.fab-btn:active {
+  transform: scale(0.96);
+}
+
+.fab-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: #fff;
+  flex-shrink: 0;
+}
+
+.fab-label {
+  max-width: 0;
+  opacity: 0;
+  margin-left: 0;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  transition: max-width 0.25s ease, opacity 0.2s ease 0.05s, margin-left 0.25s ease;
+}
+
+.fab-btn:hover .fab-label {
+  max-width: 64px;
+  opacity: 1;
+  margin-left: 10px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fab-btn, .fab-label { transition: none; }
+  .fab-btn:hover { transform: none; }
+}

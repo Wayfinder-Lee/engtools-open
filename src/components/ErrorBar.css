@@ -1,0 +1,48 @@
+/* 错误条内部布局（容器沿用 sf-sticky-error 的吸顶/配色） */
+
+.error-bar { display: block; }
+
+.error-bar-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.error-bar-icon { flex-shrink: 0; }
+
+.error-bar-text { min-width: 0; }
+
+.error-bar-btn {
+  flex-shrink: 0;
+  border: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+  font-size: 12px;
+  padding: 1px 10px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  opacity: 0.9;
+  align-self: center;
+}
+.error-bar-btn:hover { opacity: 1; background: rgba(255, 255, 255, 0.12); }
+
+.error-bar-feedback { border-style: dashed; }
+
+.error-bar-detail { margin-top: 6px; font-size: 12px; }
+.error-bar-detail summary {
+  cursor: pointer;
+  opacity: 0.75;
+  user-select: none;
+}
+.error-bar-detail pre {
+  margin: 6px 0 0;
+  padding: 8px 10px;
+  background: rgba(0, 0, 0, 0.18);
+  border-radius: var(--radius-sm);
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-height: 140px;
+  overflow-y: auto;
+  font-size: 11px;
+}

@@ -1,0 +1,256 @@
+/* ===== 全局布局 ===== */
+.app {
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.app-header {
+  background: var(--bg-raised);
+  color: var(--fg);
+  padding: 20px 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid var(--border-faint);
+  box-shadow: var(--shadow-sm);
+}
+
+/* 品牌区：侧栏收起时前置「打开导航」方钮 + logo 标题 */
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  color: var(--fg);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sb-toggle {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--fg-muted);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+.sb-toggle:hover {
+  background: var(--bg-inset);
+  color: var(--fg);
+  border-color: var(--border-strong);
+}
+
+/* 品牌标题：点击回主页 */
+.brand-home {
+  font: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+  background: transparent;
+  border: none;
+  padding: 2px 8px;
+  margin: 0 -8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.brand-home:hover {
+  background: var(--bg-inset);
+}
+
+.app-subtitle {
+  font-size: 13px;
+  color: var(--fg-muted);
+  font-weight: 400;
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 顶栏右侧操作区：学段切换 + 账号额度 + 退出 */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+/* 学段切换（初中/高中）—— 胶囊分段控件 */
+.stage-switch {
+  display: inline-flex;
+  padding: 3px;
+  background: var(--bg-inset);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+}
+.stage-btn {
+  padding: 4px 14px; font-size: 12px; font-weight: 600;
+  color: var(--fg-muted); background: transparent; border: none;
+  border-radius: var(--radius-pill); cursor: pointer; transition: all 0.15s;
+}
+.stage-btn:hover { color: var(--fg); }
+.stage-btn.active {
+  background: var(--bg-overlay); color: var(--fg); font-weight: 700;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-logout {
+  padding: 4px 14px; font-size: 12px; color: var(--fg-muted);
+  background: transparent; border: 1px solid var(--border);
+  border-radius: var(--radius-pill); cursor: pointer; transition: all 0.15s;
+}
+.btn-logout:hover {
+  background: var(--bg-inset); color: var(--fg); border-color: var(--border-strong);
+}
+
+.app-body {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px 24px;
+}
+
+/* ===== 左侧栏布局：docked 时内容右移让位 =====
+   ⚠️ 只允许 margin-left 平移——给 .app / .app-main-column / .app-body 加
+   transform 或 overflow 会破坏 .app-body 内 sf- 吸顶体系（见 StageFlow.css）。 */
+.app-main-column {
+  min-width: 0;
+  transition: margin-left 0.25s ease;
+}
+
+.app--sb-docked .app-main-column {
+  margin-left: 240px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-main-column {
+    transition: none;
+  }
+}
+
+@media print {
+  .app-main-column {
+    margin-left: 0 !important;
+  }
+}
+
+/* 图标按钮基线：任何直接含 .icon 的按钮自动变成 icon+文字 的横向排布 */
+button:has(> .icon) {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ===== 占位页面 ===== */
+.placeholder {
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--fg-muted);
+}
+
+.placeholder-icon {
+  font-size: 64px;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.placeholder h3 {
+  font-size: 20px;
+  color: var(--fg-2);
+  margin: 0 0 8px;
+}
+
+.placeholder p {
+  font-size: 14px;
+  margin: 0;
+}
+
+/* ===== 窄屏分流提示（W9）===== */
+.mobile-hint {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 14px;
+  margin-bottom: 14px;
+  background: var(--info-soft, var(--bg-inset));
+  border: 1px solid var(--info, var(--border));
+  border-radius: var(--radius-sm);
+  font-size: 12.5px;
+  color: var(--fg-2);
+}
+.mobile-hint button {
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  color: var(--fg-muted);
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+}
+.mobile-hint button:hover { background: var(--bg-inset); color: var(--fg); }
+
+/* ===== 响应式 ===== */
+@media (max-width: 768px) {
+  .app-header {
+    padding: 16px 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .app-header h1 {
+    font-size: 18px;
+  }
+
+  .app-subtitle {
+    white-space: normal;
+  }
+
+  .header-right {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .app-body {
+    padding: 12px 14px;
+  }
+}
+
+/* 375px 级：账号链路（注册/兑换/额度/历史）必须可用 —— 工具本体不做移动适配（W9） */
+@media (max-width: 480px) {
+  .app-header {
+    padding: 12px 12px;
+    gap: 6px;
+  }
+  .app-header h1 {
+    font-size: 16px;
+  }
+  .app-subtitle {
+    font-size: 12px;
+  }
+  .header-right {
+    width: 100%;
+    gap: 8px;
+  }
+  .stage-btn {
+    padding: 4px 10px;
+    font-size: 11px;
+  }
+}

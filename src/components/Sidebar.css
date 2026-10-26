@@ -1,0 +1,266 @@
+/* 左侧导航栏（Sidebar）—— sb- 前缀，颜色全部走 index.css design tokens。
+   z-index 层级：hotzone 280 < backdrop 290 < 侧栏 300 —— 高于页内浮层/下拉，
+   低于各模态（1000/1100）。 */
+
+.sb {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 240px;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-raised);
+  border-right: 1px solid var(--border-faint);
+  transform: translateX(-100%);
+  transition: transform 0.25s ease;
+  z-index: 300;
+}
+
+/* 磨砂玻璃：半透明 + 背后模糊饱和。@supports 兜底——不支持 backdrop-filter
+   的浏览器保持上面的不透明浅底，不会出现「文字叠在内容上」的裸半透明 */
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .sb {
+    background: var(--bg-glass);
+    -webkit-backdrop-filter: blur(24px) saturate(1.5);
+    backdrop-filter: blur(24px) saturate(1.5);
+  }
+}
+
+.sb--open {
+  transform: translateX(0);
+}
+
+.sb--overlay {
+  box-shadow: var(--shadow-lg);
+}
+
+.sb--docked {
+  box-shadow: none;
+}
+
+/* 关闭时的左缘悬停热区（与 Sidebar.tsx 联动，仅 !visible 时渲染） */
+.sb-hotzone {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 16px;
+  z-index: 280;
+  cursor: pointer;
+}
+
+/* 窄屏抽屉背板 */
+.sb-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(46, 42, 36, 0.4);
+  z-index: 290;
+}
+
+/* ── 头部：品牌（点击回主页）+ 图钉 / 关闭 ── */
+.sb-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 12px 10px;
+  border-bottom: 1px solid var(--border-faint);
+  color: var(--fg-2);
+}
+
+.sb-brand {
+  flex: 1;
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--fg-2);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 2px 6px;
+  margin-left: -6px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.sb-brand:hover {
+  background: var(--bg-inset);
+  color: var(--fg);
+}
+
+.sb-title {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 主页与功能板块之间的分割线 */
+.sb-sep {
+  height: 1px;
+  background: var(--border-faint);
+  margin: 8px 6px;
+  flex-shrink: 0;
+}
+
+/* 教学环节分组：与侧栏同底的「凹槽」棱线分区——左上高光边、右下浅影边，无色块；
+   填充走玻璃浮起层（半透明），与磨砂侧栏同一质感 */
+.sb-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 4px;
+  background: var(--bg-glass-raise);
+  border: 1px solid transparent;
+  border-top-color: var(--edge-light);
+  border-left-color: var(--edge-light);
+  border-right-color: var(--edge-dark);
+  border-bottom-color: var(--edge-dark);
+  border-radius: var(--radius-md);
+  margin-top: 10px;
+  box-shadow: 2px 2px 4px var(--edge-dark);
+}
+
+/* 组标：小号弱化字，左缘对齐条目文字列（块 padding 4 + 条目 padding 12 + icon 22 + gap 10） */
+.sb-group-label {
+  padding: 9px 12px 3px 44px;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--fg-faint);
+  user-select: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sb-head-actions {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.sb-icon-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--fg-muted);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+
+.sb-icon-btn:hover {
+  background: var(--bg-inset);
+  color: var(--fg);
+}
+
+.sb-icon-btn.active {
+  background: var(--accent-soft);
+  color: var(--accent-text);
+}
+
+/* ── 导航项：44px 高、22px 图标 ── */
+.sb-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sb-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 8px 12px;
+  font-size: 13.5px;
+  font-weight: 500;
+  text-align: left;
+  color: var(--fg-muted);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.sb-item:hover {
+  color: var(--fg);
+  /* 玻璃上的悬停层（半透明）：色块上同色 hover 会隐形，主页项与组内条目共用一层 */
+  background: var(--bg-glass-hover);
+}
+
+.sb-item.active {
+  color: var(--accent-text);
+  background: var(--accent-soft);
+  font-weight: 600;
+}
+
+.sb-label {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── 底部信息入口：更新日志 / 隐私与协议（次级样式，弱于功能导航）── */
+.sb-foot {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 8px 10px;
+  border-top: 1px solid var(--border-faint);
+}
+
+.sb-item--info {
+  min-height: 38px;
+  font-size: 13px;
+  color: var(--fg-faint);
+}
+
+.sb-item--info:hover {
+  color: var(--fg-2);
+}
+
+/* 未读更新红点 */
+.sb-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-left: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  vertical-align: 2px;
+}
+
+/* ── 响应式 / 动效 / 打印 ── */
+@media (max-width: 768px) {
+  .sb {
+    width: min(300px, 85vw);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sb {
+    transition: none;
+  }
+}
+
+@media print {
+  .sb,
+  .sb-hotzone,
+  .sb-backdrop {
+    display: none !important;
+  }
+}

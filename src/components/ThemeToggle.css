@@ -1,0 +1,32 @@
+/* 主题切换三态分段控件 —— 与 App.css 的 .stage-switch 同一视觉语言 */
+.theme-switch {
+  display: inline-flex;
+  padding: 3px;
+  background: var(--bg-inset);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+}
+
+.theme-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 27px;
+  height: 26px;
+  color: var(--fg-muted);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.theme-btn:hover {
+  color: var(--fg);
+}
+
+.theme-btn.active {
+  background: var(--bg-overlay);
+  color: var(--fg);
+  box-shadow: var(--shadow-sm);
+}

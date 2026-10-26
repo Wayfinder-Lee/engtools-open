@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>engtools 英语教学工具箱 - 词汇提取·应用文·读后续写·试卷排版·衡水体字帖</title>
+    <meta name="description" content="面向中学英语教师的 AI 备课工具箱：粘贴试卷自动提取词汇生成学案、应用文与读后续写范文讲解、手写作文照片生成个性化学案、衡水体字帖、整卷 AI 解析重排版导出 Word。注册即送免费额度，无需绑定 API Key。" />
+    <meta name="keywords" content="英语教师工具,词汇提取,读后续写,应用文写作,高考英语,中考英语,衡水体字帖,试卷排版,英语学案,备课工具" />
+    <!-- 部分静态托管配不了 Referrer-Policy 响应头，meta 先兜底（自带 Key 用户的保密心智） -->
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <!-- 主题三态（light/dark/system，存 vocab_builder_theme）：先于首帧写 data-theme，
+         防暗色用户白闪。解析逻辑与 src/utils/theme.ts 保持一致，改一处必须同步另一处。 -->
+    <meta name="theme-color" content="#f5f4ee" />
+    <script>
+      (function () {
+        var dark = false;
+        try {
+          var p = localStorage.getItem('vocab_builder_theme');
+          dark = p === 'dark' || (p !== 'light' &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches);
+        } catch (e) { /* 存储不可用：亮色兜底 */ }
+        var root = document.documentElement;
+        root.dataset.theme = dark ? 'dark' : 'light';
+        root.style.colorScheme = dark ? 'dark' : 'light';
+        if (dark) {
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', '#262624');
+        }
+      })();
+    </script>
+    <link rel="canonical" href="https://www.engtools.cn/" />
+    <!-- 微信 / 社群分享卡片 -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="English Teacher's Toolkit" />
+    <meta property="og:title" content="engtools 英语教学工具箱 - 几分钟生成可打印学案" />
+    <meta property="og:description" content="词汇提取、应用文、读后续写、个性化学案、衡水体字帖、试卷排版六大工具，注册即送免费额度。" />
+    <meta property="og:url" content="https://www.engtools.cn/" />
+    <meta property="og:image" content="https://www.engtools.cn/landing/handwriting-sample.jpg" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "English Teacher's Toolkit",
+      "url": "https://www.engtools.cn/",
+      "applicationCategory": "EducationalApplication",
+      "inLanguage": "zh-CN",
+      "description": "面向中国中学英语教师的 AI 备课工具箱：词汇提取、应用文助手、读后续写助手、书面表达个性化学案、衡水体字帖、试卷排版助手。",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CNY", "description": "注册赠送免费额度" }
+    }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

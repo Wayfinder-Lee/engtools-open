@@ -1,0 +1,45 @@
+/* 衡水体字体（Apache 2.0 授权，内部使用）— 首页 mock 预览用 */
+@font-face {
+  font-family: 'Hengshui';
+  src: url('/fonts/hengshui.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.mock-copybook {
+  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 16px; align-items: start; font-size: 13px;
+}
+
+/* ── 左侧迷你控制区 ── */
+.mc-controls { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+.mc-ctrl-group { display: flex; flex-direction: column; gap: 6px; }
+.mc-ctrl-title { font-size: 12px; font-weight: 700; color: var(--fg-2); }
+.mc-checkbox {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12.5px; color: var(--fg-2); cursor: default;
+}
+.mc-checkbox input { accent-color: var(--accent); cursor: default; }
+.mc-ai-btn { align-self: flex-start; }
+.mc-hint { margin: 2px 0 0; font-size: 11.5px; color: var(--fg-faint); }
+
+/* ── 右侧纸张预览 ── */
+.mc-paper {
+  background: #fff; border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 14px 16px 16px; box-shadow: var(--shadow-sm);
+}
+.mc-paper-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border-faint);
+}
+.mc-paper-title { font-size: 14px; font-weight: 700; color: var(--fg); }
+.mc-paper-name { font-size: 11px; color: var(--fg-muted); }
+
+/* 纸张线格预览：SVG 绘制（线格位置由字体实测度量反推，与真实模块同款逻辑） */
+.mc-svg { display: block; width: 100%; height: auto; }
+.mc-loading { margin: 24px 0; font-size: 12px; color: var(--fg-faint); }
+
+@media (max-width: 560px) {
+  .mock-copybook { grid-template-columns: 1fr; }
+}

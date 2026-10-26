@@ -1,0 +1,184 @@
+/* ============================================================
+   阶段工作流共享组件（sf- 前缀）：
+   StageStepper 横向流程条 / StageCard 阶段卡片 / StageToc 左侧目录
+   + sf-header / sf-layout 页面骨架（各功能页通用）
+   配色全部走设计变量
+   ============================================================ */
+
+/* ── 页头：标题 + 醒目的保存/历史入口 ─────────────── */
+.sf-header {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  background: linear-gradient(135deg, var(--accent-soft) 0%, var(--bg-raised) 100%);
+  border: 1px solid var(--accent-soft-border); border-radius: var(--radius-md);
+  padding: 14px 20px; margin-bottom: 16px;
+}
+.sf-header h2 { margin: 0 0 4px; font-size: 18px; color: var(--fg); display: flex; align-items: center; gap: 8px; }
+.sf-header p { font-size: 13px; color: var(--fg-2); }
+.sf-header-actions { display: flex; gap: 8px; flex-shrink: 0; }
+.sf-btn-sm {
+  padding: 6px 14px; font-size: 13px; font-weight: 600;
+  border: 1px solid var(--border-strong); border-radius: var(--radius-pill);
+  background: var(--bg-overlay); color: var(--fg-2); cursor: pointer; white-space: nowrap;
+  transition: all 0.15s;
+}
+.sf-btn-sm:hover { background: var(--accent-soft); color: var(--accent-text); border-color: var(--accent-soft-border); }
+
+/* ── 阶段流程布局：左目录 + 右内容（吸顶偏移与下方 104px 对齐） ── */
+/* 注意：.app-body 等祖先不能加 overflow/transform，否则 position: sticky 失效 */
+.sf-layout {
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px;
+  align-items: start;
+}
+/* 目录列必须拉伸到与内容列等高，.sf-toc 的 sticky 才有跟随空间 */
+.sf-rail { display: none; align-self: stretch; }
+.sf-main { min-width: 0; }
+@media (min-width: 1201px) {
+  .sf-layout { grid-template-columns: 212px minmax(0, 1fr); }
+  .sf-layout.rail-off { grid-template-columns: minmax(0, 1fr); }
+  .sf-rail { display: block; }
+}
+
+/* ── 吸顶流程条内的常驻错误提示 ─────────────────── */
+.sf-sticky-error {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 14px; margin-top: 10px;
+  background: var(--danger-soft); border: 1px solid var(--danger-border);
+  border-radius: var(--radius-sm); color: var(--danger); font-size: 13px;
+}
+
+/* ── 阶段卡片内：收尾操作行 / 提示 ───────────────── */
+.sf-stage-footer {
+  display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+  margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--border-strong);
+}
+.sf-footer-hint { font-size: 12px; color: var(--fg-faint); }
+.sf-next-btn {
+  padding: 8px 18px; font-size: 13px; font-weight: 600;
+  border: none; border-radius: var(--radius-pill);
+  background: var(--accent); color: #fff; cursor: pointer; transition: background 0.15s;
+}
+.sf-next-btn:hover { background: var(--accent-hover); }
+.sf-stage-hint { font-size: 13px; color: var(--fg-muted); margin: 4px 0; }
+
+
+/* ── 横向流程条（吸顶容器由使用方包 .sf-stepper-wrap） ── */
+.sf-stepper-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: var(--bg);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-faint);
+}
+.sf-stepper { display: flex; align-items: flex-start; overflow-x: auto; }
+.sf-step-group { display: flex; align-items: flex-start; flex: 1; min-width: 0; }
+.sf-step-group.last { flex: 0 0 auto; }
+.sf-step {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  background: none; border: none; padding: 2px 8px; cursor: pointer; min-width: 76px;
+}
+.sf-step-num {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700;
+  background: var(--bg-inset); color: var(--fg-muted);
+  border: 1px solid var(--border-strong);
+  transition: all 0.15s;
+}
+.sf-step-text { display: flex; flex-direction: column; align-items: center; gap: 1px; }
+.sf-step-label { font-size: 13px; font-weight: 600; color: var(--fg-muted); white-space: nowrap; transition: color 0.15s; }
+.sf-step-sub { font-size: 11px; color: var(--fg-faint); white-space: nowrap; }
+
+.sf-step:hover .sf-step-label { color: var(--fg-2); }
+.sf-step.done .sf-step-num { background: var(--success-soft); border-color: var(--success-border); color: var(--success); }
+.sf-step.busy .sf-step-num {
+  background: var(--accent-soft); border-color: var(--accent-soft-border); color: var(--accent-text);
+  animation: sf-pulse 1.2s ease-in-out infinite;
+}
+.sf-step.ready .sf-step-num { background: var(--bg-overlay); border-color: var(--accent-soft-border); color: var(--accent-text); }
+.sf-step.active .sf-step-num {
+  background: var(--accent); border-color: var(--accent); color: #fff;
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+.sf-step.active .sf-step-label { color: var(--fg); font-weight: 700; }
+.sf-step.active .sf-step-sub { color: var(--accent-text); }
+.sf-connector { flex: 1; height: 2px; border-radius: 1px; background: var(--border); margin: 15px 6px 0; min-width: 12px; }
+.sf-connector.passed { background: var(--success-border); }
+@keyframes sf-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(217, 119, 87, 0.25); }
+  50% { box-shadow: 0 0 0 5px rgba(217, 119, 87, 0.1); }
+}
+
+/* ── 阶段卡片 ───────────────────────────────────── */
+.sf-stage {
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: 16px;
+  scroll-margin-top: 104px;
+}
+.sf-stage.open { border-color: var(--border-strong); box-shadow: var(--shadow-sm); }
+.sf-stage-header {
+  display: flex; align-items: center; gap: 10px; width: 100%;
+  padding: 12px 18px;
+  background: var(--bg-inset);
+  border: none; cursor: pointer; text-align: left;
+  transition: background 0.15s;
+}
+.sf-stage-header:hover { background: var(--accent-soft); }
+.sf-stage-num {
+  width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700;
+  background: var(--bg-overlay); color: var(--fg-muted); border: 1px solid var(--border-strong);
+}
+.sf-stage.done .sf-stage-num { background: var(--success-soft); border-color: var(--success-border); color: var(--success); }
+.sf-stage.busy .sf-stage-num { background: var(--accent-soft); border-color: var(--accent-soft-border); color: var(--accent-text); }
+.sf-stage-title { font-size: 15px; font-weight: 700; color: var(--fg); white-space: nowrap; }
+.sf-stage-meta {
+  margin-left: auto; font-size: 12px; color: var(--fg-muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.sf-chevron { font-size: 13px; color: var(--fg-muted); transition: transform 0.2s; flex-shrink: 0; }
+.sf-chevron.open { transform: rotate(180deg); }
+.sf-stage-body { padding: 18px 20px; }
+
+/* ── 左侧跟随目录 ───────────────────────────────── */
+.sf-toc {
+  position: sticky;
+  top: 104px;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 8px;
+}
+.sf-toc-title {
+  font-size: 12px; font-weight: 700; color: var(--fg-faint);
+  letter-spacing: 0.05em; padding: 0 10px 6px;
+}
+.sf-toc-item {
+  display: flex; align-items: center; gap: 6px; width: 100%;
+  padding: 5px 10px;
+  border: none; background: none; border-radius: var(--radius-sm);
+  font-size: 13px; color: var(--fg-muted); text-align: left; cursor: pointer;
+}
+.sf-toc-item:hover { background: var(--bg-inset); color: var(--fg-2); }
+.sf-toc-item.depth-1 { padding-left: 24px; font-size: 12px; }
+.sf-toc-item.active { background: var(--accent-soft); color: var(--accent-text); font-weight: 600; }
+.sf-toc-label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sf-toc-status { margin-left: auto; font-size: 11px; flex-shrink: 0; }
+.sf-toc-status.done { color: var(--success); }
+.sf-toc-status.busy { color: var(--accent-text); }
+.sf-toc-status.error { color: var(--danger); }
+
+/* ── 响应式 ─────────────────────────────────────── */
+@media (max-width: 768px) {
+  .sf-step { min-width: 0; padding: 2px 4px; }
+  .sf-step-label { font-size: 12px; }
+  .sf-step-sub { display: none; }
+  .sf-connector { margin: 15px 2px 0; min-width: 8px; }
+  .sf-stage-body { padding: 14px; }
+}

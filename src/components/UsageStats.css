@@ -1,0 +1,659 @@
+/* ============================================================
+   使用统计 + 主页（HomeTab / UsageDashboard / UsageLedger / RecentPanel）
+   前缀 us-。颜色全部来自 index.css 的 --us-* / 主题 token，零硬编码。
+   ============================================================ */
+
+/* ── 主页容器 ── */
+.home-tab {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.us-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+/* ── 通用小组件 ── */
+.us-mini-btn {
+  border: 1px solid var(--border);
+  background: var(--bg-raised);
+  color: var(--fg-2);
+  border-radius: var(--radius-pill);
+  padding: 4px 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.us-mini-btn:hover:not(:disabled) {
+  background: var(--bg-inset);
+  border-color: var(--border-strong);
+}
+
+.us-mini-btn:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.us-h4 {
+  margin: 0 0 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--fg-2);
+}
+
+.us-note {
+  margin: 10px 0 0;
+  font-size: 12px;
+  color: var(--fg-faint);
+}
+
+.us-loading,
+.us-empty {
+  padding: 32px 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--fg-muted);
+}
+
+.us-err {
+  margin: 8px 0;
+  font-size: 13px;
+  color: var(--danger);
+}
+
+/* 分段控件（日/周/月、明细筛选）——同 stage-switch 视觉语言 */
+.us-seg {
+  display: inline-flex;
+  gap: 2px;
+  padding: 2px;
+  background: var(--bg-inset);
+  border-radius: var(--radius-pill);
+}
+
+.us-seg-btn {
+  border: none;
+  background: transparent;
+  color: var(--fg-muted);
+  border-radius: var(--radius-pill);
+  padding: 4px 14px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.us-seg-btn.active {
+  background: var(--bg-overlay);
+  color: var(--fg);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ── 看板 ── */
+.us-dash {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.us-section {
+  background: var(--bg-raised);
+  border: 1px solid var(--border-faint);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+}
+
+/* KPI 行：stat tile（比例数字，不用 tabular-nums） */
+.us-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.us-tile {
+  background: var(--bg-raised);
+  border: 1px solid var(--border-faint);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.us-tile-label {
+  font-size: 12px;
+  color: var(--fg-muted);
+}
+
+.us-tile-value {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--fg);
+  line-height: 1.2;
+}
+
+.us-tile-hero .us-tile-value {
+  font-size: 28px;
+  color: var(--accent-text);
+}
+
+/* 生成统计瓦片 */
+.us-ftiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+  gap: 8px;
+}
+
+.us-ftile {
+  background: var(--bg-soft);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.us-ftile-label {
+  font-size: 12px;
+  color: var(--fg-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.us-ftile-hint {
+  font-style: normal;
+  font-size: 10px;
+  color: var(--fg-faint);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 0 5px;
+}
+
+.us-ftile-value {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.us-ftile-unit {
+  font-style: normal;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--fg-faint);
+  margin-left: 3px;
+}
+
+/* 热力图：52 周 × 7 行，12px 格 + 2px 表面间隙 */
+.us-heat-head,
+.us-heat-body {
+  display: flex;
+  gap: 6px;
+}
+
+.us-heat-corner {
+  width: 16px;
+  flex: none;
+}
+
+.us-heat-months {
+  display: grid;
+  grid-template-columns: repeat(52, 12px);
+  grid-auto-rows: 16px;
+  gap: 2px;
+  font-size: 10px;
+  color: var(--fg-faint);
+  overflow: hidden;
+}
+
+.us-heat-months span {
+  white-space: nowrap;
+}
+
+.us-heat-wd {
+  width: 16px;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 10px;
+  line-height: 12px;
+  color: var(--fg-faint);
+  text-align: center;
+}
+
+.us-heat-wd span {
+  height: 12px;
+}
+
+.us-heat-scroll {
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.us-heat-grid {
+  display: grid;
+  grid-template-columns: repeat(52, 12px);
+  grid-auto-rows: 12px;
+  gap: 2px;
+  width: max-content;
+}
+
+.us-heat-cell {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  background: var(--bg-inset);
+}
+
+.us-heat-l1 { background: var(--us-heat-1); }
+.us-heat-l2 { background: var(--us-heat-2); }
+.us-heat-l3 { background: var(--us-heat-3); }
+.us-heat-l4 { background: var(--us-heat-4); }
+
+.us-heat-future {
+  background: transparent;
+}
+
+.us-heat-cell:hover:not(.us-heat-future) {
+  outline: 1px solid var(--fg-muted);
+}
+
+.us-heat-foot {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--fg-faint);
+}
+
+.us-heat-legend-label {
+  margin: 0 2px;
+}
+
+.us-heat-note {
+  margin-left: 12px;
+}
+
+/* 分区标题行（标题 + 右侧粒度切换） */
+.us-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.us-section-head .us-h4 {
+  margin: 0;
+}
+
+/* ── 主页工具卡（统计之下、最近生成之上）：标签与侧栏同源，这里负责「解释每个工具是什么」 ── */
+.ht-tools {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(224px, 1fr));
+  gap: 8px;
+}
+
+.ht-tool {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px;
+  text-align: left;
+  background: var(--bg-soft);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.ht-tool:hover {
+  background: var(--bg-inset);
+  border-color: var(--border-faint);
+}
+
+.ht-tool-icon {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  background: var(--bg-overlay);
+  border: 1px solid var(--border-faint);
+  color: var(--fg-2);
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.ht-tool:hover .ht-tool-icon {
+  background: var(--accent-soft);
+  border-color: transparent;
+  color: var(--accent-text);
+}
+
+.ht-tool-text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ht-tool-name {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--fg);
+  line-height: 1.3;
+}
+
+.ht-tool-desc {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--fg-muted);
+}
+
+/* 周/月条带（热力图周/月粒度） */
+.us-heat-strip {
+  display: flex;
+  gap: 2px;
+  width: max-content;
+}
+
+.us-heat-month-strip {
+  display: flex;
+  gap: 10px;
+}
+
+.us-heat-month-slot {
+  flex: 1;
+  max-width: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.us-heat-cell-wide {
+  width: 100%;
+  height: 14px;
+}
+
+.us-heat-month-label {
+  font-size: 10px;
+  color: var(--fg-faint);
+  white-space: nowrap;
+}
+
+/* 查看额度明细入口 */
+.us-ledger-row {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.us-ledger-link {
+  border: none;
+  background: none;
+  color: var(--accent-text);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.us-ledger-link:hover {
+  color: var(--accent-text-hover);
+  text-decoration: underline;
+}
+
+/* 未登录引导卡 */
+.us-guest-card {
+  background: var(--bg-raised);
+  border: 1px solid var(--border-faint);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  text-align: center;
+}
+
+.us-guest-card h4 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  color: var(--fg);
+}
+
+.us-guest-card p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--fg-muted);
+}
+
+.us-error-card {
+  background: var(--danger-soft);
+  border: 1px solid var(--danger-border);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.us-error-card p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--danger);
+}
+
+/* 「最近生成」：跨模块 vb_history_* 最近记录（us-recent 前缀） */
+.us-recent {
+  margin-top: 24px;
+  background: var(--bg-raised);
+  border: 1px solid var(--border-faint);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+}
+
+.us-recent-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.us-recent-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border-faint);
+  flex-wrap: wrap;
+}
+
+/* 宽屏：四列网格——徽章列定宽（最长「书面表达个性化学案」8 字），标题列起点对齐；
+   窄屏（≤640px）回落到上面的 flex + 换行堆叠 */
+@media (min-width: 641px) {
+  .us-recent-row {
+    display: grid;
+    grid-template-columns: 108px minmax(0, 1fr) auto auto;
+    flex-wrap: nowrap;
+  }
+  .us-recent-actions { margin-left: 0; }
+}
+
+.us-recent-row:last-child {
+  border-bottom: none;
+}
+
+.us-recent-badge {
+  display: inline-block;
+  flex: none;
+  font-size: 11px;
+  line-height: 1;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+
+.us-recent-badge.vocab        { background: var(--tag-blue-bg);   color: var(--tag-blue-text); }
+.us-recent-badge.practical    { background: var(--tag-orange-bg); color: var(--tag-orange-text); }
+.us-recent-badge.continuation { background: var(--tag-purple-bg); color: var(--tag-purple-text); }
+.us-recent-badge.handwriting  { background: var(--tag-green-bg);  color: var(--tag-green-text); }
+.us-recent-badge.copybook     { background: var(--accent-soft);   color: var(--accent-text); }
+.us-recent-badge.exampaper    { background: var(--info-soft);     color: var(--info); }
+
+.us-recent-name {
+  flex: 1 1 180px;
+  min-width: 0;
+  font-size: 13px;
+  color: var(--fg);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.us-recent-time {
+  flex: none;
+  font-size: 12px;
+  color: var(--fg-faint);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.us-recent-actions {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+  flex-wrap: wrap;
+}
+
+.us-recent-open {
+  color: var(--accent-text);
+}
+
+.us-recent-open:hover:not(:disabled) {
+  color: var(--accent-text-hover);
+}
+
+@media (max-width: 640px) {
+  .us-recent-name {
+    flex-basis: 100%;
+    order: 3; /* 窄屏：名称整行换到徽章下，按钮组跟在时间后 */
+  }
+
+  .us-recent-actions {
+    margin-left: 0;
+  }
+}
+
+/* ── 额度明细（我的账户弹窗内） ── */
+.us-ledger {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.us-ledger-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.us-ledger-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.us-table-wrap {
+  overflow-x: auto;
+}
+
+.us-table {
+  width: 100%;
+}
+
+.us-table th {
+  text-align: left;
+  font-size: 12px;
+  color: var(--fg-muted);
+  font-weight: 500;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+  width: auto; /* 覆写 am-table th 的 96px（那是账户信息两列表的标签列宽） */
+}
+
+.us-table td {
+  font-size: 13px;
+  color: var(--fg-2);
+  padding: 7px 8px;
+  border-bottom: 1px solid var(--border-faint);
+  white-space: nowrap;
+}
+
+.us-col-time {
+  font-variant-numeric: tabular-nums;
+  color: var(--fg-muted) !important;
+}
+
+.us-col-delta {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.us-col-delta.pos { color: var(--success); }
+.us-col-delta.neg { color: var(--fg); }
+
+.us-meta {
+  margin-left: 6px;
+  font-size: 11px;
+  color: var(--fg-faint);
+}
+
+.us-badge {
+  display: inline-block;
+  font-size: 11px;
+  line-height: 1;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+}
+
+.us-badge-llm {
+  background: var(--bg-inset);
+  color: var(--fg-muted);
+}
+
+.us-badge-redeem {
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+.us-badge-grant {
+  background: var(--info-soft);
+  color: var(--info);
+}
+
+.us-badge-unlock,
+.us-badge-stat {
+  background: var(--bg-inset);
+  color: var(--fg-faint);
+}
+
+.us-more-row {
+  display: flex;
+  justify-content: center;
+}
+
+/* ── 响应式：KPI 降 2 列，瓦片自适应已由 auto-fill 兜底 ── */
+@media (max-width: 640px) {
+  .us-kpis {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .us-tile-hero .us-tile-value {
+    font-size: 24px;
+  }
+
+  .us-section {
+    padding: 12px;
+  }
+}

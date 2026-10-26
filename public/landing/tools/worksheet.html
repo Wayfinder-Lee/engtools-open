@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>学生手写作文照片一键生成个性化学案 - 作文讲评工具</title>
+<meta name="description" content="每个学生拍一张作文答题卡照片上传，AI 逐份 OCR 识别、逐句诊断错误、按时态/句式/用词归类问题，为每位学生生成专属讲评学案与巩固练习，批量打印 PDF / Word。" />
+<link rel="canonical" href="https://www.engtools.cn/landing/tools/worksheet.html" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="学生手写作文照片一键生成个性化学案 - 作文讲评工具" />
+<meta property="og:description" content="每个学生拍一张作文答题卡照片上传，AI 逐份 OCR 识别、逐句诊断错误、按时态/句式/用词归类问题，为每位学生生成专属讲评学案与巩固练习，批量打印 PDF / Word。" />
+<meta property="og:url" content="https://www.engtools.cn/landing/tools/worksheet.html" />
+<style>:root{--bg:#faf6f1;--bg-raised:#fffdf9;--fg:#2e241c;--fg2:#5c5347;--muted:#8a7f70;--accent:#d97757;--accent-t:#a64a28;--soft:#f6e7de;--border:#e8e0d4;--radius:14px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--fg);line-height:1.75}
+a{color:var(--accent-t)}
+.wrap{max-width:920px;margin:0 auto;padding:0 20px}
+header{border-bottom:1px solid var(--border);background:var(--bg-raised)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;padding:14px 20px}
+.logo{font-weight:700;font-size:16px;color:var(--fg);text-decoration:none}
+.hero{padding:56px 0 40px}
+.kicker{color:var(--accent-t);font-weight:600;font-size:14px;letter-spacing:.04em}
+h1{font-size:clamp(24px,5vw,36px);line-height:1.3;margin:8px 0 12px}
+.tagline{color:var(--fg2);font-size:16px;max-width:640px}
+.cta{display:inline-block;margin-top:22px;background:var(--accent);color:#fff;text-decoration:none;font-weight:600;padding:11px 28px;border-radius:999px}
+.cta:hover{background:#c4643f}
+h2{font-size:20px;margin:44px 0 14px}
+.shot{background:var(--bg-raised);border:1px dashed var(--border);border-radius:var(--radius);padding:14px}
+.shot img{width:100%;border-radius:10px;display:block}
+.shot-ph{min-height:300px;display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center;text-align:center;color:var(--muted);font-size:14px;padding:24px}
+.shot-ph b{color:var(--fg2)}
+.shot-cap{font-size:13px;color:var(--muted);margin-top:8px}
+ol.steps,ul.feats{padding-left:22px;color:var(--fg2)}
+ol.steps li,ul.feats li{margin:8px 0}
+details{background:var(--bg-raised);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin:10px 0}
+summary{cursor:pointer;font-weight:600}
+details p{color:var(--fg2);margin-top:8px;font-size:14.5px}
+.tools{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.tools a{font-size:13px;text-decoration:none;background:var(--bg-raised);border:1px solid var(--border);border-radius:999px;padding:6px 14px;color:var(--fg2)}
+.tools a:hover{border-color:var(--accent);color:var(--accent-t)}
+footer{border-top:1px solid var(--border);margin-top:56px;padding:22px 0 30px;color:var(--muted);font-size:13px;text-align:center}
+.note{font-size:13px;color:var(--muted);margin-top:8px}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"学生姓名会泄露吗？","acceptedAnswer":{"@type":"Answer","text":"照片仅用于当次识别，历史只存在本机浏览器，上传前可遮挡姓名。"}},{"@type":"Question","name":"全班45人要多久？","acceptedAnswer":{"@type":"Answer","text":"批量进行，通常几分钟；失败可单独重试且不扣额度。"}},{"@type":"Question","name":"能导出成 Word 吗？","acceptedAnswer":{"@type":"Answer","text":"支持单个与批量导出 Word，也可批量打印为 PDF。"}}]}
+</script>
+</head>
+<body>
+<header><div class="wrap">
+  <a class="logo" href="/">🛠️ English Teacher's Toolkit</a>
+  <a href="/">返回主站 →</a>
+</div></header>
+
+<main class="wrap">
+  <section class="hero">
+    <span class="kicker">书面表达个性化学案 · 作文讲评</span>
+    <h1>学生手写作文照片一键生成个性化学案</h1>
+    <p class="tagline">每个学生拍一张作文答题卡照片上传，AI 逐份 OCR 识别、逐句诊断错误、按时态/句式/用词归类问题，为每位学生生成专属讲评学案与巩固练习，批量打印 PDF / Word。</p>
+    <a class="cta" href="/">免费试用（无需绑定 API Key）→</a>
+    <p class="note">注册即送体验额度；生成的内容可导出 Word / PDF 打印。</p>
+  </section>
+
+  <h2>成品长这样</h2>
+  <!-- ══ 图片占位（William 替换）══
+       建议图：个性化学案的批量流程截图：学生胶囊列表（每人一个✓/⏳状态）、单份学案（错误归类表：时态/逗号粘连/主谓一致…+针对性巩固默写+句式提升）。
+       操作：截图后存为 ./images/worksheet.jpg（1200×800 左右），
+       然后把下面整个 <div class="shot-ph">…</div> 换成：
+       <img src="./images/worksheet.jpg" alt="书面表达个性化学案的批量生成与单个学案界面" /> -->
+  <div class="shot">
+    <div class="shot-ph">
+      <span style="font-size:34px">📷</span>
+      <b>【图片占位】书面表达个性化学案的批量生成与单个学案界面</b>
+      <span>个性化学案的批量流程截图：学生胶囊列表（每人一个✓/⏳状态）、单份学案（错误归类表：时态/逗号粘连/主谓一致…+针对性巩固默写+句式提升）。</span>
+    </div>
+  </div>
+
+  <h2>三步出成品</h2>
+  <ol class="steps">
+<li>设置作文题干，批量上传学生手写作文照片（每生一张）</li>
+<li>AI 自动识别文字并评定书写质量，逐个核对可改</li>
+<li>一键为全班生成个性化学案，批量打印 PDF 或导出 Word</li>
+  </ol>
+
+  <h2>为什么老师用它</h2>
+  <ul class="feats">
+<li>一张照片对应一位学生，文件名即姓名，免录入</li>
+<li>错误按类型归类（时态、逗号粘连、非谓语…），讲评有据</li>
+<li>每位学生的学案只针对他自己的问题，真正个性化</li>
+<li>含书写质量评定（衡水体合规度），练字一起抓</li>
+  </ul>
+
+  <h2>常见问题</h2>
+<details><summary>学生姓名会泄露吗？</summary><p>照片仅用于当次识别，不做其他用途；上传前请确认已获学生/家长同意，也可先遮挡姓名。历史记录只保存在你自己的浏览器里。</p></details>
+<details><summary>全班 45 人要多久？</summary><p>OCR 与生成按人批量进行，通常几分钟内完成；失败的个人可单独重试，失败不扣额度。</p></details>
+<details><summary>能导出成 Word 吗？</summary><p>可以。支持逐个导出 Word 与批量打包 Word，也可直接批量打印为 PDF。</p></details>
+
+  <h2>其他工具</h2>
+  <div class="tools">
+    <a href="./vocab">📝 词汇提取</a><a href="./practical">✉️ 应用文助手</a><a href="./continuation">📖 读后续写助手</a><a href="./copybook">✒️ 衡水体字帖</a><a href="./exampaper">📄 试卷排版助手</a>
+  </div>
+</main>
+
+<footer><div class="wrap">
+  <p>English Teacher's Toolkit · 面向中学英语教师的 AI 备课工具箱 · <a href="https://www.engtools.cn">www.engtools.cn</a></p>
+  <!-- ICP 备案号下来后填这里 -->
+</div></footer>
+</body>
+</html>

@@ -1,0 +1,107 @@
+/* 试卷排版助手 mock 面板（落地页展示用，复用 showcase 面板框架） */
+
+.mock-exam {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+  font-size: 13px;
+}
+
+.mock-exam-source {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-raised);
+  padding: 10px 12px;
+}
+.mock-exam-source-tag {
+  display: inline-block;
+  font-size: 11px;
+  color: var(--fg-faint);
+  border: 1px solid var(--border-faint);
+  border-radius: var(--radius-pill);
+  padding: 1px 8px;
+  margin-bottom: 6px;
+}
+.mock-exam-source-text {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--fg-2);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.mock-exam-arrow {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent-text);
+}
+
+.mock-exam-structure {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-raised);
+  overflow: hidden;
+}
+.mock-exam-structure-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--bg-inset);
+}
+.mock-exam-structure-meta { font-weight: 400; font-size: 11px; color: var(--fg-faint); }
+
+.mock-exam-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-top: 1px solid var(--border-faint);
+  font-size: 12.5px;
+  animation: mock-exam-in 0.4s both;
+}
+.mock-exam-row-num {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent-text);
+  font-size: 11px;
+  font-weight: 700;
+}
+.mock-exam-row-title { flex: 1; color: var(--fg-2); }
+.mock-exam-row-count { font-size: 11px; color: var(--fg-faint); }
+.mock-exam-row-state { font-size: 11px; color: var(--fg-muted); }
+.mock-exam-row-state.done { color: var(--success); }
+
+.mock-exam-row.busy .mock-exam-row-state { animation: mock-exam-blink 1.6s infinite; }
+
+.mock-exam-export {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border-faint);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent-text);
+  background: var(--accent-soft);
+}
+
+@keyframes mock-exam-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes mock-exam-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}

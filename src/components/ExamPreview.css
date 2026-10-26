@@ -1,0 +1,57 @@
+/* 排版预览弹层。外框（overlay/modal/toolbar）走主题 token；纸张内容区
+   （.ep-page 起）模拟印刷，恒白纸黑字、不随主题（Print red lines）——
+   暗色模式下如同 PDF 阅读器里的白纸页，是有意为之，勿 token 化 */
+.ep-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(46, 42, 36, 0.55);
+  display: flex; align-items: center; justify-content: center;
+}
+.ep-modal {
+  width: min(1100px, 94vw); height: min(92vh, 900px);
+  background: var(--bg-inset); border-radius: var(--radius-lg);
+  display: flex; flex-direction: column; overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+.ep-toolbar {
+  display: flex; align-items: center; gap: 14px;
+  padding: 10px 16px; background: var(--bg-overlay); border-bottom: 1px solid var(--border);
+}
+.ep-title { font-size: 14px; font-weight: 700; color: var(--fg); flex: 1; }
+.ep-zoom { display: flex; align-items: center; gap: 6px; }
+.ep-zoom-label { font-size: 12px; color: var(--fg-2); min-width: 40px; text-align: center; }
+.ep-scroll {
+  flex: 1; overflow: auto; padding: 20px;
+  display: flex; flex-direction: column; align-items: center; gap: 18px;
+}
+
+/* 页面（A4/8K/A3 按真实比例） */
+.ep-page {
+  background: #fff; box-shadow: 0 2px 10px rgba(46, 42, 36, 0.18);
+  overflow: hidden; position: relative;
+  flex-shrink: 0;
+}
+.ep-body { box-sizing: border-box; position: relative; display: flex; flex-direction: column; }
+.ep-header-band { flex-shrink: 0; }
+.ep-cols { display: flex; flex: 1; gap: 0; }
+.ep-cols-1 .ep-col { width: 100%; }
+.ep-cols-2 .ep-col { width: 50%; }
+/* 栏宽对齐导出分栏模型：COLUMN_SPACE 400 twips ≈ 26.7px，两栏内容宽相等 */
+.ep-cols-2 .ep-col { width: calc(50% - 13.5px); box-sizing: border-box; }
+.ep-cols-2 .ep-col:first-child { padding-right: 13.5px; }
+.ep-cols-2 .ep-col + .ep-col { border-left: 1px dashed #d4cfc3; padding-left: 12.5px; }
+.ep-footer {
+  position: absolute; bottom: 10px; left: 0; right: 0;
+  text-align: center; font-size: 10px; color: #868e96;
+}
+
+/* 块 */
+.ep-block { text-align: justify; font-family: 'Times New Roman', 'Noto Serif SC', serif; color: #212529; }
+.ep-center { text-align: center; }
+.ep-run { white-space: pre-wrap; }
+.ep-bold { font-weight: 700; }
+.ep-hei { font-family: 'SimHei', 'Noto Sans SC', sans-serif; }
+
+/* 试卷头分隔线 / 答题横线 */
+.ep-hr { border-bottom: 1.4px solid #212529; }
+.ep-rules { display: flex; flex-direction: column; }
+.ep-rule { border-bottom: 1px dotted #999; }

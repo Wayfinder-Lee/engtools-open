@@ -1,0 +1,210 @@
+/* ============================================================
+   Design tokens — claude.ai 风格暖米白主题
+   亮色 = :root，暗色 = [data-theme='dark'] 覆写同名变量，组件层零改动。
+   data-theme 由 JS 仲裁写入（index.html head 内联脚本先于首帧设置，
+   解析逻辑与 src/utils/theme.ts 保持一致）；三态偏好存 localStorage
+   vocab_builder_theme，默认 system。
+   例外（恒白纸黑字，不随主题）：试卷预览纸张模拟 / 字帖 canvas / docx 导出。
+   改任何颜色后运行 node scripts/check-theme-contrast.mjs 校验两套色板对比度。
+   ============================================================ */
+:root {
+  color-scheme: light;
+  /* ---- 背景层级 ---- */
+  --bg: #f5f4ee;            /* 页面底：暖米白 */
+  --bg-raised: #faf9f5;     /* 卡片 / 面板：暖白 */
+  --bg-overlay: #fffdf9;    /* 弹层 / 输入框：近白 */
+  --bg-inset: #efede6;      /* 内嵌底：hover 底 / 次级按钮底 */
+  --bg-soft: #f5f4ef;       /* 内嵌浅底：看板瓦片 / 工具卡 / 侧栏分组块（介于卡片与内嵌底之间） */
+  --bg-glass: rgba(250, 249, 245, 0.72);      /* 磨砂玻璃底：侧栏（配 backdrop-filter，无则退化为 --bg-raised） */
+  --bg-glass-raise: rgba(255, 253, 249, 0.5); /* 玻璃上的浮起层：侧栏分组框 */
+  --bg-glass-hover: rgba(255, 253, 249, 0.65);/* 玻璃上的悬停层：侧栏条目 hover */
+  --bg-active: #e9e5db;     /* 激活态胶囊底（tab / 分段控件） */
+
+  /* ---- 文字层级 ---- */
+  --fg: #1f1e1d;            /* 主文字：炭黑 */
+  --fg-2: #3d3d3a;          /* 次级文字 */
+  --fg-muted: #6e6b64;      /* 弱化说明文字 */
+  --fg-faint: #98958d;      /* 占位 / 禁用 */
+
+  /* ---- 边框 ---- */
+  --border: #e5e1d8;
+  --border-strong: #d4cfc3;
+  --border-faint: #eeece4;
+  --edge-light: #fffdf9;    /* 浮雕棱线：左上高光（与卡片底同族的近白） */
+  --edge-dark: #e5e1d8;     /* 浮雕棱线：右下浅影 */
+
+  /* ---- 赤陶橙强调（Claude Crail）双色阶 ---- */
+  --accent: #d97757;        /* 填充 / 主按钮 / 选中态 */
+  --accent-hover: #c15f3c;  /* 悬停深一档 */
+  --accent-text: #a64a28;   /* 链接 / 小字强调（米白底 ≥5:1） */
+  --accent-text-hover: #7c3a1e;
+  --accent-soft: #f7e8e1;   /* 橙浅底 */
+  --accent-soft-border: #ecd5c8;
+
+  /* ---- 语义色（含义不变，色调调暖） ---- */
+  --success: #3a7442;  --success-soft: #ebf1e7;  --success-border: #d3e0cc;
+  --danger: #c7351f;   --danger-soft: #fbeae6;   --danger-border: #f2cfc8;
+  --warning: #8f6114;  --warning-soft: #f7f0dc;  --warning-border: #e8dab8;
+  --info: #47617a;     --info-soft: #e8edf3;     --info-border: #d2dee9;
+  --success-hover: #2f5f36;  --warning-hover: #754e0d;  /* 实色按钮 hover（随 --warning 加深同步调一档） */
+
+  /* ---- 来源标签四色（蓝=主旨 橙=证据 绿=题干 紫=选项，柔和暖调） ---- */
+  --tag-blue-bg: #e8edf3;   --tag-blue-text: #3f5b78;   --tag-blue-border: #d2dee9;
+  --tag-orange-bg: #f8ece0; --tag-orange-text: #9a5b21; --tag-orange-border: #edd5be;
+  --tag-green-bg: #eaf0e5;  --tag-green-text: #4a724f;  --tag-green-border: #d5e0ce;
+  --tag-purple-bg: #eeeaf3; --tag-purple-text: #6a5580; --tag-purple-border: #dcd4e7;
+
+  /* ---- 使用看板（主页热力图）：赤陶橙序数单色阶，经 dataviz 校验器双主题验证 ---- */
+  --us-heat-1: #e09a72;  /* 多=深（亮色锚点），对卡面 2.21:1 */
+  --us-heat-2: #d97757;
+  --us-heat-3: #b85c33;
+  --us-heat-4: #8f3f1d;
+
+  /* ---- 落地页 CTA 深色带（两主题恒深底：亮色下是反差带，暗色下比页面更深保持分段感） ---- */
+  --cta-bg: #262624;
+  --cta-fg: #f5f4ee;
+  --cta-fg-muted: #b8b4aa;
+
+  /* ---- 字体 ---- */
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, 'Noto Sans SC', 'PingFang SC',
+    'Microsoft YaHei', sans-serif;
+  --font-serif: Georgia, 'Songti SC', 'STSong', 'SimSun',
+    'Times New Roman', serif;
+
+  /* ---- 圆角 ---- */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  /* ---- 阴影（暖色调） ---- */
+  --shadow-sm: 0 1px 2px rgba(61, 56, 44, 0.06), 0 1px 3px rgba(61, 56, 44, 0.05);
+  --shadow-md: 0 2px 6px rgba(61, 56, 44, 0.07), 0 4px 12px rgba(61, 56, 44, 0.06);
+  --shadow-lg: 0 4px 12px rgba(61, 56, 44, 0.1), 0 12px 32px rgba(61, 56, 44, 0.1);
+}
+
+/* ===== 暗色主题：暖深棕灰（亮色的文字色翻面作底，同一暖调基因，非冷灰黑） ===== */
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  /* ---- 背景层级（暗色下「浮起」= 更亮，凹陷 = 更暗） ---- */
+  --bg: #262624;            /* 页面底：暖深棕灰（亮色 --fg 的翻面） */
+  --bg-raised: #2e2d2a;     /* 卡片 / 面板 */
+  --bg-overlay: #383632;    /* 弹层 / 输入框 / 分段控件激活块 */
+  --bg-inset: #1f1e1c;      /* 内嵌底：比页面更暗 = 凹陷 */
+  --bg-soft: #33322e;       /* 内嵌浅底：卡片之上微浮（亮色 --bg-soft 的对应层） */
+  --bg-glass: rgba(46, 45, 42, 0.7);          /* 磨砂玻璃底：侧栏 */
+  --bg-glass-raise: rgba(56, 54, 50, 0.5);    /* 玻璃上的浮起层：侧栏分组框 */
+  --bg-glass-hover: rgba(62, 60, 55, 0.6);    /* 玻璃上的悬停层 */
+  --bg-active: #3e3c37;     /* 激活态胶囊底 */
+
+  /* ---- 文字层级（米白下探） ---- */
+  --fg: #f0efe9;
+  --fg-2: #d3d1c8;
+  --fg-muted: #a3a099;
+  --fg-faint: #75726b;
+
+  /* ---- 边框 ---- */
+  --border: #3b3935;
+  --border-strong: #4c4a44;
+  --border-faint: #322f2b;
+  --edge-light: #3e3c37;    /* 浮雕棱线：左上高光 */
+  --edge-dark: #1f1e1c;     /* 浮雕棱线：右下浅影 */
+
+  /* ---- 赤陶橙强调（底色深了，文字档整体提亮一档；填充色不动保白字对比） ---- */
+  --accent: #d97757;
+  --accent-hover: #c15f3c;
+  --accent-text: #e59472;   /* 深底 ≥4.5:1 */
+  --accent-text-hover: #f0a98b;
+  --accent-soft: #40302a;   /* 暗橙浅底 */
+  --accent-soft-border: #5e453a;
+
+  /* ---- 语义色（文字档提亮、soft 档换深色同调底） ---- */
+  --success: #8bc794;  --success-soft: #2a382b;  --success-border: #47614a;
+  --danger: #e8795f;   --danger-soft: #3f2823;   --danger-border: #67423b;
+  --warning: #dcaa4f;  --warning-soft: #3a311d;  --warning-border: #61512c;
+  --info: #93b3cf;     --info-soft: #293341;     --info-border: #42556b;
+  --success-hover: #9dd2a5;  --warning-hover: #e6ba64;
+
+  /* ---- 来源标签四色（暗色 = 深色同调底 + 提亮文字） ---- */
+  --tag-blue-bg: #293340;   --tag-blue-text: #93b6d8;   --tag-blue-border: #42566b;
+  --tag-orange-bg: #3b2f21; --tag-orange-text: #dcab79; --tag-orange-border: #61492e;
+  --tag-green-bg: #2a3527;  --tag-green-text: #9cc7a1;  --tag-green-border: #47604a;
+  --tag-purple-bg: #312c3d; --tag-purple-text: #b8a3d6; --tag-purple-border: #4e4463;
+
+  /* ---- 使用看板（暗色锚点翻转：多=亮）---- */
+  --us-heat-1: #8a4a2e;  /* 首档对暗卡面 2.03:1 */
+  --us-heat-2: #b06a45;
+  --us-heat-3: #d28b62;
+  --us-heat-4: #f0a982;
+
+  /* ---- 落地页 CTA 深色带 ---- */
+  --cta-bg: #1e1d1b;
+  --cta-fg: #f0efe9;
+  --cta-fg-muted: #a3a099;
+
+  /* ---- 阴影（暗色下换近黑高不透明度，浮层次感更多靠表面亮度差） ---- */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35), 0 1px 3px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.45), 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* ===== 全局基础 ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--fg);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+}
+
+/* claude.ai 签名式衬线标题：西文 Georgia，中文宋体系 */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+p {
+  margin: 0;
+}
+
+button {
+  font-family: inherit;
+}
+
+input, textarea {
+  font-family: inherit;
+}
+
+a {
+  color: var(--accent-text);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--accent-text-hover);
+  text-decoration: underline;
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--fg);
+}
