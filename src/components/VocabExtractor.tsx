@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import type { ApiConfig, FieldSelection, SavedItem, Stage, VocabItem, VocabLevel, VocabState, WordLevel } from '../types';
 import { MODEL_OPTIONS, getVocabLevels, DEFAULT_FIELD_SELECTION, VOCAB_DEFAULT_MODEL, WORD_LEVELS, MODULE_LABELS } from '../types';
 import { extractVocab } from '../services/llm';
+import { extractTextFromFile } from '../services/fileExtract';
 import { apiReportUsage } from '../services/api';
 import { buildVocabExtractionPrompt } from '../prompts/vocabExtraction';
 import { parseSections } from '../utils/sectionParser';
@@ -82,6 +83,12 @@ export default function VocabExtractor({ apiConfig, stage, quota }: Props) {
   /** 服务端计费模式（登录或游客）；false = 自带 Key */
   const serverMode = quota != null;
 
+  // 文档上传（2026-11 William 指定）：docx/pdf/txt 浏览器端提取文本，复用试卷排版助手的 fileExtract 管线
+  const [extracting, setExtracting] = useState(false);
+  const [dragOver, setDragOver] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const dragDepth = useRef(0); // dragenter/dragleave 成对触发，计数防子元素间移动时高亮闪烁
+
   // 试卷原文自动保存（W6）：debounce 600ms，三态指示器
   const [autosaveState, setAutosaveState] = useState('');
   useEffect(() => {
@@ -158,6 +165,32 @@ export default function VocabExtractor({ apiConfig, stage, quota }: Props) {
   const handleReplaceWord = useCallback((id: number, item: VocabItem) => {
     setVocabList(prev => (prev ?? []).map(w => (w.id === id ? item : w)));
   }, []);
+
+  /** 上传试卷文档：前端直接提取文本灌入原文框（多文件按文件名顺序拼接）；已有内容先确认替换 */
+  const handleUploadFiles = async (files: FileList | File[] | null) => {
+    const list = Array.from(files ?? []).sort((a, b) => a.name.localeCompare(b.name, 'zh-Hans-CN'));
+    if (list.length === 0 || extracting || loading) return;
+    if (inputText.trim() && !window.confirm('试卷内容框已有内容，上传后将替换全部内容（如需保留请先复制）。确定替换吗？')) return;
+    setError('');
+    setExtracting(true);
+    try {
+      const parts: string[] = [];
+      for (const f of list) {
+        try {
+          parts.push(await extractTextFromFile(f));
+        } catch (e) {
+          throw new Error(`「${f.name}」${e instanceof Error ? e.message : '读取失败'}`);
+        }
+      }
+      setInputText(parts.join('\n\n'));
+      track('upload_success', 'vocab');
+    } catch (e) {
+      track('generate_error', 'vocab');
+      setError(e instanceof Error ? e.message : '文件读取失败');
+    } finally {
+      setExtracting(false);
+    }
+  };
 
   // ─── Section detection ──────────────────────────
   const handleDetectSections = useCallback(() => {
@@ -426,7 +459,7 @@ export default function VocabExtractor({ apiConfig, stage, quota }: Props) {
       <div className="sf-header">
         <div>
           <h2><Icon name="vocab" size={20} /> 试卷词汇提取</h2>
-          <p>粘贴{stage === 'junior' ? '中考' : '高考'}英语试卷 → 自动识别题型分段 → 勾选提取词汇 → 编辑导出（每段 5 额度，失败不扣额度）</p>
+          <p>粘贴或上传（Word / PDF / TXT）{stage === 'junior' ? '中考' : '高考'}英语试卷 → 自动识别题型分段 → 勾选提取词汇 → 编辑导出（每段 5 额度，失败不扣额度）</p>
         </div>
         <div className="sf-header-actions">
           <button className="sf-btn-sm" onClick={handleSave} title="保存当前试卷与词汇表，稍后可从历史记录载入"><Icon name="save" size={16} /> 保存进度</button>
@@ -503,11 +536,46 @@ export default function VocabExtractor({ apiConfig, stage, quota }: Props) {
               {!inputText.trim() && (
                 <SampleFill toolName="试卷词汇提取" onFill={() => setInputText(stage === 'junior' ? SAMPLE_VOCAB_JUNIOR : SAMPLE_VOCAB_SENIOR)} />
               )}
-              <textarea id="exam-text" value={inputText} onChange={e => setInputText(e.target.value)}
-                placeholder={stage === 'junior'
-                  ? `在此粘贴中考英语试卷内容（含题型标题）。例如：\n\n一、听力理解\nText 1\nW: Excuse me, could you tell me how to get to the museum?\nM: Sure. Go straight ahead and turn left at the second crossing...\n\n二、单项选择\n1. My brother is good at ______ basketball after school.\nA. play  B. plays  C. playing  D. played\n\n三、完形填空\nLast summer, I volunteered at a local animal shelter. It was an experience that ___ my life...\n\n四、阅读理解\nA\nWhen I was ten, my family moved to a small town in the mountains. At first I hated everything about it...\n\n五、任务型阅读\n阅读下面短文，根据短文内容完成表格。\n\n六、短文填空\n阅读下面短文，在空白处填入一个适当的单词或括号内单词的正确形式。\n\n七、书面表达\n假设你是李华，请根据以下要点用英语写一篇短文，词数 80-100。`
-                  : `在此粘贴高考英语试卷内容（含题型标题）。例如：\n\n第一部分 听力\nText 1\nW: Excuse me, could you tell me how to get to the museum?\nM: Sure. Go straight ahead and turn left at the second crossing...\n\n第二部分 阅读理解\nA\nWhen I was ten, my family moved to a small town in the mountains. At first I hated everything about it...\n\n第三部分 语言运用\n第一节 完形填空\nLast summer, I volunteered at a local animal shelter. It was an experience that ___ my life...`}
-                rows={14} disabled={loading} />
+              {/* 文本框 + 右侧上传面板：文件拖入不再落成路径文本，直接走提取管线 */}
+              <div
+                className={`input-with-upload ${dragOver ? 'drag-over' : ''}`}
+                onDragEnter={(e) => {
+                  if (!e.dataTransfer.types.includes('Files')) return;
+                  e.preventDefault();
+                  dragDepth.current += 1;
+                  setDragOver(true);
+                }}
+                onDragOver={(e) => {
+                  if (!e.dataTransfer.types.includes('Files')) return;
+                  e.preventDefault();
+                  e.dataTransfer.dropEffect = 'copy';
+                }}
+                onDragLeave={() => {
+                  dragDepth.current = Math.max(0, dragDepth.current - 1);
+                  if (dragDepth.current === 0) setDragOver(false);
+                }}
+                onDrop={(e) => {
+                  if (!e.dataTransfer.types.includes('Files')) return; // 文本拖放不拦截，保留浏览器默认行为
+                  e.preventDefault();
+                  dragDepth.current = 0;
+                  setDragOver(false);
+                  void handleUploadFiles(e.dataTransfer.files);
+                }}
+              >
+                <textarea id="exam-text" value={inputText} onChange={e => setInputText(e.target.value)}
+                  placeholder={stage === 'junior'
+                    ? `在此粘贴中考英语试卷内容（含题型标题）。例如：\n\n一、听力理解\nText 1\nW: Excuse me, could you tell me how to get to the museum?\nM: Sure. Go straight ahead and turn left at the second crossing...\n\n二、单项选择\n1. My brother is good at ______ basketball after school.\nA. play  B. plays  C. playing  D. played\n\n三、完形填空\nLast summer, I volunteered at a local animal shelter. It was an experience that ___ my life...\n\n四、阅读理解\nA\nWhen I was ten, my family moved to a small town in the mountains. At first I hated everything about it...\n\n五、任务型阅读\n阅读下面短文，根据短文内容完成表格。\n\n六、短文填空\n阅读下面短文，在空白处填入一个适当的单词或括号内单词的正确形式。\n\n七、书面表达\n假设你是李华，请根据以下要点用英语写一篇短文，词数 80-100。`
+                    : `在此粘贴高考英语试卷内容（含题型标题）。例如：\n\n第一部分 听力\nText 1\nW: Excuse me, could you tell me how to get to the museum?\nM: Sure. Go straight ahead and turn left at the second crossing...\n\n第二部分 阅读理解\nA\nWhen I was ten, my family moved to a small town in the mountains. At first I hated everything about it...\n\n第三部分 语言运用\n第一节 完形填空\nLast summer, I volunteered at a local animal shelter. It was an experience that ___ my life...`}
+                  rows={14} disabled={loading} />
+                <input ref={fileInputRef} type="file" accept=".docx,.pdf,.txt" multiple hidden
+                  onChange={(e) => { void handleUploadFiles(e.target.files); e.target.value = ''; }} />
+                <button type="button" className="upload-panel" disabled={extracting}
+                  onClick={() => fileInputRef.current?.click()}>
+                  <Icon name="upload" size={22} />
+                  <span className="upload-panel-title">{extracting ? '提取文字中…' : '上传试卷文档'}</span>
+                  <span className="upload-panel-hint">Word / PDF / TXT<br />点击选择，或直接拖入此处</span>
+                </button>
+              </div>
             </div>
 
             <div className="sf-stage-footer">

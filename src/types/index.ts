@@ -120,7 +120,8 @@ export const DEFAULT_FIELD_SELECTION: FieldSelection = {
   definition: true,
   collocations: false,
   memoryAid: false,
-  examFrequency: false,
+  // 词频默认生成（2026-11 William 指定）：词汇表筛选与学案导出都依赖它，默认关会导致筛选形同虚设
+  examFrequency: true,
   originalSentence: false,
   extraExample: false,
 };

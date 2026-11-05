@@ -221,6 +221,36 @@
   box-sizing: border-box;
 }
 
+/* 输入区 + 上传试卷文档面板（文本框右侧竖排入口；窄屏移到下方横排） */
+.input-with-upload { display: flex; align-items: stretch; gap: 10px; }
+.input-with-upload textarea { flex: 1; min-width: 0; }
+.input-with-upload .upload-panel {
+  flex: 0 0 136px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 10px;
+  border: 1.5px dashed var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-inset);
+  color: var(--fg-muted);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+.input-with-upload .upload-panel:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-soft); color: var(--accent-text); }
+.input-with-upload .upload-panel:disabled { cursor: progress; opacity: 0.75; }
+.input-with-upload.drag-over .upload-panel { border-color: var(--accent); background: var(--accent-soft); color: var(--accent-text); }
+.input-with-upload.drag-over textarea { border-color: var(--accent); }
+.upload-panel-title { font-size: 13px; font-weight: 600; color: inherit; }
+.upload-panel-hint { font-size: 12px; line-height: 1.6; color: var(--fg-faint); text-align: center; }
+@media (max-width: 900px) {
+  .input-with-upload { flex-direction: column; }
+  .input-with-upload .upload-panel { flex: none; flex-direction: row; justify-content: flex-start; padding: 10px 14px; }
+  .upload-panel-hint { text-align: left; }
+}
+
 .input-section textarea:focus {
   outline: none;
   border-color: var(--accent);

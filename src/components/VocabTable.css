@@ -602,6 +602,47 @@
 .freq-low { color: var(--fg-muted); background: var(--bg-inset); }
 .freq-potential { color: var(--fg-faint); background: var(--bg-inset); }
 
+/* 频次编辑格：点击徽标弹层六档点选（button 重置浏览器默认样式后沿用 freq-tag 配色） */
+.freq-cell { position: relative; display: inline-block; }
+.freq-cell .freq-tag {
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+.freq-cell .freq-tag:hover { outline: 1.5px solid var(--accent); outline-offset: 1px; }
+.freq-pop {
+  /* fixed 定位 + JS 内联坐标：分组块/卡片 overflow:hidden 会裁剪 absolute 弹层 */
+  position: fixed;
+  z-index: 100;
+  min-width: 132px;
+  padding: 4px;
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+}
+.freq-pop-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  text-align: left;
+  white-space: nowrap;
+  color: var(--fg-2);
+}
+.freq-pop-item:hover { background: var(--bg-inset); }
+.freq-pop-item.current { background: var(--accent-soft); color: var(--accent-text); }
+.freq-pop-stars { letter-spacing: 1px; font-size: 12px; }
+.freq-pop-label { font-size: 12px; color: var(--fg-muted); }
+.freq-pop-item.current .freq-pop-label { color: var(--accent-text); }
+
 .docx-options-sub { display: flex; align-items: center; flex-wrap: wrap; gap: 2px 10px; }
 .docx-options-label { font-size: 12px; color: var(--fg-faint); }
 .docx-option-compact { font-size: 12.5px; }

@@ -54,3 +54,13 @@ export function freqClass(freq: string | undefined): string {
   if (stars === 3) return 'freq-mid';
   return 'freq-low';
 }
+
+/** 频次编辑弹层选项（VocabTable FreqCell 单一真源；顺序 = 星级从高到低 + 潜在考点） */
+export const FREQ_OPTIONS: { value: string; label: string }[] = [
+  { value: '★★★★★', label: '高频' },
+  { value: '★★★★☆', label: '较高' },
+  { value: '★★★☆☆', label: '中频' },
+  { value: '★★☆☆☆', label: '较低' },
+  { value: '★☆☆☆☆', label: '低频' },
+  { value: '⚪', label: '潜在考点' },
+];

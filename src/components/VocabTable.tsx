@@ -6,7 +6,7 @@ import { generateCloze, generateWordInfo } from '../services/llm';
 import { buildClozePrompt } from '../prompts/vocabExtraction';
 import { track } from '../utils/analytics';
 import { Icon } from './icons';
-import { addWords, exportDictationSheetDocx, exportFlashcardsDocx, exportAnkiTsv, freqClass, filterByFreq, FREQ_FILTERS, type FreqFilter } from './vocabTableExtras';
+import { addWords, exportDictationSheetDocx, exportFlashcardsDocx, exportAnkiTsv, freqClass, filterByFreq, FREQ_FILTERS, FREQ_OPTIONS, type FreqFilter } from './vocabTableExtras';
 import './VocabTable.css';
 
 interface Props {
@@ -115,6 +115,75 @@ function EditableCell({
   );
 }
 
+// ─── 频次编辑格（点击弹层六档点选；2026-11 William 指定词频可编辑）───
+
+/** 弹层尺寸估值（6 档固定条目）：fixed 定位坐标与上下翻转都按它算 */
+const FREQ_POP_H = 194;
+const FREQ_POP_W = 132;
+
+function FreqCell({ value, onSave }: { value: string; onSave: (v: string) => void }) {
+  const [open, setOpen] = useState(false);
+  const [pos, setPos] = useState({ top: 0, left: 0 });
+  const rootRef = useRef<HTMLSpanElement>(null);
+  const btnRef = useRef<HTMLButtonElement>(null);
+
+  const toggle = () => {
+    if (open) { setOpen(false); return; }
+    // fixed 定位：分组块/移动卡片是 overflow:hidden，absolute 弹层会被裁剪，按按钮视口坐标出层
+    const r = btnRef.current?.getBoundingClientRect();
+    if (r) {
+      const below = window.innerHeight - r.bottom > FREQ_POP_H + 12;
+      setPos({
+        top: below ? r.bottom + 6 : Math.max(8, r.top - FREQ_POP_H - 6),
+        left: Math.min(Math.max(8, r.left + r.width / 2 - FREQ_POP_W / 2), window.innerWidth - FREQ_POP_W - 8),
+      });
+    }
+    setOpen(true);
+  };
+
+  // 弹层打开期间：点击外部 / Esc / 滚动缩放（fixed 坐标失效）关闭
+  useEffect(() => {
+    if (!open) return;
+    const close = () => setOpen(false);
+    const onDown = (e: MouseEvent) => {
+      if (rootRef.current && !rootRef.current.contains(e.target as Node)) setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') close(); };
+    document.addEventListener('mousedown', onDown);
+    document.addEventListener('keydown', onKey);
+    window.addEventListener('scroll', close, true);
+    window.addEventListener('resize', close);
+    return () => {
+      document.removeEventListener('mousedown', onDown);
+      document.removeEventListener('keydown', onKey);
+      window.removeEventListener('scroll', close, true);
+      window.removeEventListener('resize', close);
+    };
+  }, [open]);
+
+  return (
+    // stopPropagation：移动端卡片头部点击是展开/收起，频次格不能触发它
+    <span className="freq-cell" ref={rootRef} onClick={(e) => e.stopPropagation()}>
+      <button ref={btnRef} type="button" className={`freq-tag ${freqClass(value)}`} title="点击修改频次"
+        onClick={toggle}>
+        {value || '⚪'}
+      </button>
+      {open && (
+        <div className="freq-pop" style={{ top: pos.top, left: pos.left }}>
+          {FREQ_OPTIONS.map(opt => (
+            <button key={opt.value} type="button"
+              className={`freq-pop-item ${(value || '⚪') === opt.value ? 'current' : ''}`}
+              onClick={() => { onSave(opt.value); setOpen(false); }}>
+              <span className="freq-pop-stars">{opt.value}</span>
+              <span className="freq-pop-label">{opt.label}</span>
+            </button>
+          ))}
+        </div>
+      )}
+    </span>
+  );
+}
+
 // ─── Markdown → HTML ──────────────────────────────
 
 function renderMarkdown(text: string): string {
@@ -205,7 +274,7 @@ function TableRow({ item, index, fields, onEdit, onDelete, onRegenerate, regener
       </td>
       <td className="col-word"><strong>{item.word}</strong></td>
       {fields.phonetic && <td className="col-phonetic"><EditableCell value={item.phonetic} onSave={(v) => onEdit(item.id, 'phonetic', v)} /></td>}
-      {fields.examFrequency && <td className="col-freq"><span className={`freq-tag ${freqClass(item.examFrequency)}`}>{item.examFrequency || '⚪'}</span></td>}
+      {fields.examFrequency && <td className="col-freq"><FreqCell value={item.examFrequency} onSave={(v) => onEdit(item.id, 'examFrequency', v)} /></td>}
       <td className="col-source">
         <span className={`source-tag source-${item.source}`}>{item.sourceLabel}</span>
       </td>
@@ -340,7 +409,7 @@ function MobileCard({ item, onEdit, onDelete, onRegenerate, regenerating, fields
         <span className="drag-handle" title="拖动排序" onClick={(e) => e.stopPropagation()}>⋮⋮</span>
         <span className="card-id">{item.id}</span>
         <span className="card-word">{item.word}</span>
-        {fields.examFrequency && <span className="card-freq">{item.examFrequency}</span>}
+        {fields.examFrequency && <FreqCell value={item.examFrequency} onSave={(v) => onEdit(item.id, 'examFrequency', v)} />}
         <span className={`source-tag source-${item.source}`}>{item.sourceLabel}</span>
         <span className="card-expand">{expanded ? '▼' : '▶'}</span>
       </div>
@@ -478,7 +547,11 @@ export default function VocabTable({
   return (
     <div className="vocab-table-container">
       <div className="table-toolbar">
-        <span className="table-count">共 <strong>{vocabList.length}</strong> 个词汇 · {grouped.length} 个分组</span>
+        <span className="table-count">
+          {freqFilter === 'all'
+            ? <>共 <strong>{vocabList.length}</strong> 个词汇 · {grouped.length} 个分组</>
+            : <>筛选出 <strong>{filteredList.length}</strong> / {vocabList.length} 个词汇 · {grouped.length} 个分组</>}
+        </span>
         <div className="freq-filter" role="group" aria-label="按考试频次筛选">
           {FREQ_FILTERS.map((f) => (
             <button key={f.key} className={`freq-pill ${freqFilter === f.key ? 'active' : ''}`}
